@@ -3,7 +3,7 @@ body {
   margin: 0;
   font-family: 'Barlow', sans-serif;
   color: #222;
-  background:linear-gradient(135deg, #ffdd2f, #e45e0e);
+  background:linear-gradient (135deg, #ffdd2f, #e45e0e);
   text-align: center;
 }
 
