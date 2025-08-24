@@ -1,3 +1,70 @@
+/* General Styles */
+body {
+  margin: 0;
+  font-family: 'Barlow', sans-serif;
+  background: #ffdd2f;
+  color: #222;
+}
+
+header {
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+}
+
+.logo-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.logo-placeholder {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 600;
+  font-size: 2.5rem;
+  color: #007cff;
+}
+
+.tagline {
+  font-family: 'Barlow', sans-serif;
+  font-size: 1rem;
+  margin-top: 0.2rem;
+}
+
+/* Hero Section */
+.hero {
+  text-align: center;
+  padding: 4rem 1rem;
+  position: relative;
+}
+
+.hero h1 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 2rem;
+  margin-top: 2rem;
+}
+
+.hero-subtext {
+  font-family: 'Barlow', sans-serif;
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+
+.whatsapp-btn {
+  display: inline-block;
+  background: #007cff;
+  color: #fff;
+  padding: 0.8rem 1.5rem;
+  border-radius: 10px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: transform 0.3s, background 0.3s;
+}
+
+.whatsapp-btn:hover {
+  transform: scale(1.05);
+  background: #005bb5;
+}
+
 /* Tool Circle */
 .tool-circle {
   position: relative;
@@ -23,7 +90,7 @@
   text-shadow: 2px 2px 12px rgba(0,0,0,0.6), 0 0 8px #fff;
 }
 
-/* Pop-in/out keyframes */
+/* Pop-in/out rotation animation */
 @keyframes rotate-tools {
   0% { transform: rotate(0deg) translate(120px) rotate(0deg) scale(1);}
   25% { transform: rotate(90deg) translate(130px) rotate(-90deg) scale(1.1);}
@@ -36,15 +103,68 @@
   animation: rotate-tools 20s linear infinite;
 }
 
-/* Tool placement around circle (initial positions) */
+/* Tool initial positions */
 .tool1 { top: 0; left: 50%; transform: translate(-50%, -50%); }
 .tool2 { top: 25%; left: 90%; transform: translate(-50%, -50%); }
 .tool3 { top: 75%; left: 90%; transform: translate(-50%, -50%); }
 .tool4 { top: 100%; left: 50%; transform: translate(-50%, -50%); }
 .tool5 { top: 50%; left: 0%; transform: translate(-50%, -50%); }
 
-/* Responsive adjustments */
+/* Services Section */
+.services {
+  padding: 3rem 1rem;
+  text-align: center;
+}
+
+.services h2 {
+  font-family: 'Barlow Condensed', sans-serif;
+  margin-bottom: 2rem;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.card {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 15px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+  font-weight: bold;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+}
+
+/* About Section */
+.about {
+  padding: 3rem 1rem;
+  background: #fff;
+  text-align: center;
+}
+
+.about h2 {
+  font-family: 'Barlow Condensed', sans-serif;
+  margin-bottom: 1rem;
+}
+
+/* Footer */
+footer {
+  background: #007cff;
+  color: #fff;
+  padding: 1rem;
+  text-align: center;
+}
+
+/* Responsive */
 @media (max-width: 768px) {
   .tool-circle { width: 180px; height: 180px; }
   .tool { font-size: 1.5rem; }
+  .hero h1 { font-size: 1.5rem; }
+  .hero-subtext { font-size: 1rem; }
 }
