@@ -1,60 +1,181 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SkillHub - Trusted Electricians</title>
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600&family=Barlow&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SkillHub - Coming Soon</title>
+  <style>
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Barlow', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(180deg, #000000 0%, #ffdd2f 100%);
+      color: white;
+      text-align: center;
+      overflow-x: hidden;
+    }
+
+    header {
+      width: 100%;
+      padding: 1.5rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    .logo {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 600;
+      color: #ffdd2f;
+    }
+
+    .coming-soon {
+      margin-top: 3rem;
+      font-size: 2rem;
+      font-weight: 600;
+      color: #007cff;
+      text-shadow: 0px 0px 6px rgba(0,0,0,0.4);
+    }
+
+    .tagline {
+      font-size: 1.2rem;
+      margin-top: 0.5rem;
+      color: #ffffffcc;
+    }
+
+    .services {
+      margin: 4rem 1rem;
+      font-size: 1.3rem;
+      list-style: none;
+      text-align: left;
+      max-width: 500px;
+      color: white;
+    }
+
+    .services li {
+      margin: 1rem 0;
+      padding: 0.75rem 1rem;
+      border-left: 4px solid #007cff;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+    }
+
+    /* Tool Animation Area */
+    .tool-box {
+      margin: 3rem 0;
+      height: 100px;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tool {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%) scale(0.5);
+      opacity: 0;
+      font-size: 2.5rem;
+      filter: drop-shadow(2px 4px 4px rgba(0,0,0,0.6));
+      transition: all 1s ease;
+    }
+
+    .tool.show {
+      transform: translateX(-50%) scale(1);
+      opacity: 1;
+      animation: moveRight 3s forwards;
+    }
+
+    @keyframes moveRight {
+      0% { transform: translateX(-50%) scale(0.5); opacity: 0; }
+      20% { transform: translateX(-50%) scale(1.1); opacity: 1; }
+      70% { transform: translateX(30%) scale(1); opacity: 1; }
+      100% { transform: translateX(120%) scale(0.8); opacity: 0; }
+    }
+
+    .cta {
+      margin: 3rem 0;
+    }
+
+    .cta a {
+      padding: 1rem 2rem;
+      background: #007cff;
+      color: white;
+      border-radius: 50px;
+      text-decoration: none;
+      font-size: 1.2rem;
+      transition: background 0.3s;
+    }
+
+    .cta a:hover {
+      background: #005bb5;
+    }
+
+    footer {
+      padding: 1rem;
+      font-size: 0.9rem;
+      color: #ffffff99;
+    }
+  </style>
 </head>
 <body>
-  <!-- Dark Mode Toggle -->
-  <button id="darkModeToggle">🌙</button>
-
-  <!-- Header -->
   <header>
-    <div class="logo-container">
-      <div class="logo-placeholder">SkillHub</div>
-      <p class="tagline">Connecting you with trusted electricians in Jamaica</p>
-    </div>
+    <div class="logo">SkillHub</div>
   </header>
 
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="tool-carousel">
-      <div class="tool"><img src="tools/screwdriver.svg" alt="Screwdriver"></div>
-      <div class="tool"><img src="tools/wrench.svg" alt="Wrench"></div>
-      <div class="tool"><img src="tools/hammer.svg" alt="Hammer"></div>
-      <div class="tool"><img src="tools/pliers.svg" alt="Pliers"></div>
-      <div class="tool"><img src="tools/tape_measure.svg" alt="Tape Measure"></div>
+  <main>
+    <h1 class="coming-soon">🚧 Website Coming Soon 🚧</h1>
+    <p class="tagline">Professional Electrical & A/C Solutions at Your Fingertips</p>
+
+    <!-- Services -->
+    <ul class="services">
+      <li>A/C Maintenance & Installation</li>
+      <li>Other Electrical Services</li>
+    </ul>
+
+    <!-- Tools Animation -->
+    <div class="tool-box">
+      <div class="tool">🔧</div>
+      <div class="tool">🔨</div>
+      <div class="tool">⚙️</div>
+      <div class="tool">🔩</div>
+      <div class="tool">🪛</div>
     </div>
-    <h1>Need an Electrician? We’ve Got You Covered.</h1>
-    <p class="hero-subtext">Reliable. Affordable. Professional.</p>
-    <a href="https://wa.me/18762107638" target="_blank" class="whatsapp-btn">Chat on WhatsApp</a>
-  </section>
 
-  <!-- Services Section -->
-  <section class="services">
-    <h2>Our Services</h2>
-    <div class="cards">
-      <div class="card">Wiring & Installations</div>
-      <div class="card">Repairs & Maintenance</div>
-      <div class="card">Emergency Services</div>
-      <div class="card">Consultations</div>
+    <!-- CTA -->
+    <div class="cta">
+      <a href="https://wa.me/18762107638" target="_blank">📲 Contact Us on WhatsApp</a>
     </div>
-  </section>
+  </main>
 
-  <!-- About Section -->
-  <section class="about">
-    <h2>Why SkillHub?</h2>
-    <p>SkillHub connects you with certified electricians across Jamaica. Our partners are vetted for quality and professionalism, ensuring the job is done right the first time.</p>
-  </section>
-
-  <!-- Footer -->
   <footer>
-    <p>© 2025 SkillHub. All rights reserved.</p>
+    © 2025 SkillHub. All rights reserved.
   </footer>
 
-  <script src="script.js"></script>
+  <script>
+    // Animate tools one by one
+    const tools = document.querySelectorAll('.tool');
+    let index = 0;
+
+    function showNextTool() {
+      tools.forEach(t => t.classList.remove('show'));
+      tools[index].classList.add('show');
+      index = (index + 1) % tools.length;
+    }
+
+    setInterval(showNextTool, 2500);
+    showNextTool(); // initial
+  </script>
 </body>
 </html>
