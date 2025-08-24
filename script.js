@@ -1,11 +1,12 @@
-// Optional: subtle pop animation when scrolling
-const cards = document.querySelectorAll('.card');
+// Scroll animations for cards and about section
+const elements = document.querySelectorAll('.card, .about h2, .about p');
+
 const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if(entry.isIntersecting){
       entry.target.classList.add('animate');
     }
   });
-},{ threshold: 0.2 });
+}, { threshold: 0.2 });
 
-cards.forEach(card => observer.observe(card));
+elements.forEach(el => observer.observe(el));
