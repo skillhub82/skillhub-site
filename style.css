@@ -3,7 +3,7 @@ body {
   margin: 0;
   font-family: 'Barlow', sans-serif;
   color: #222;
-  background:linear-gradient(115deg, #ffdd2f, #e45e0e);
+  background: #ffdd2f, #e45;
   min-height:100vh;
   display:flex;
   align-items:center;
@@ -15,11 +15,14 @@ header {
 }
 
 .logo {
-  font-family: 'Barlow Condensed semi-bold', sans-serif;
-  font-weight: 600;
-   font-size: 3rem;
-  color: #ffdd2f;
-  margin: 0;
+  .logo {
+  width: 200px; /* adjust as needed */
+  max-width: 80%;
+  height: auto;
+  margin: 0 auto;
+  display: block;
+}
+;
 }
 
 .tagline {
