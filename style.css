@@ -4,12 +4,20 @@ body {
   font-family: 'Barlow', sans-serif;
   background: #ffdd2f;
   color: #222;
+  transition: background 0.5s, color 0.5s;
+}
+
+/* Dark Mode */
+body.dark-mode {
+  background: #1e1e1e;
+  color: #f0f0f0;
 }
 
 header {
   padding: 1rem 2rem;
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 
 .logo-container {
@@ -30,17 +38,40 @@ header {
   margin-top: 0.2rem;
 }
 
+/* Dark Mode Toggle */
+#darkModeToggle {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  background: #007cff;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 3rem;
+  height: 3rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+  z-index: 1000;
+  transition: background 0.3s;
+}
+#darkModeToggle:hover {
+  background: #005bb5;
+}
+
 /* Hero Section */
 .hero {
   text-align: center;
-  padding: 4rem 1rem;
+  padding: 5rem 1rem 8rem 1rem;
   position: relative;
+  background: linear-gradient(to bottom, #ffdd2f, #e4a20e);
+  border-radius: 0 0 80px 80px;
+  overflow: hidden;
 }
 
 .hero h1 {
   font-family: 'Barlow Condensed', sans-serif;
-  font-size: 2rem;
-  margin-top: 2rem;
+  font-size: 2.5rem;
+  margin-top: 3rem;
 }
 
 .hero-subtext {
@@ -53,8 +84,8 @@ header {
   display: inline-block;
   background: #007cff;
   color: #fff;
-  padding: 0.8rem 1.5rem;
-  border-radius: 10px;
+  padding: 1rem 2rem;
+  border-radius: 15px;
   font-weight: bold;
   text-decoration: none;
   transition: transform 0.3s, background 0.3s;
@@ -65,55 +96,38 @@ header {
   background: #005bb5;
 }
 
-/* Tool Circle */
-.tool-circle {
+/* Tool Carousel */
+.tool-carousel {
   position: relative;
-  width: 250px;
   height: 250px;
   margin: 0 auto;
 }
 
 .tool {
   position: absolute;
-  font-size: 2rem;
-  text-shadow: 2px 2px 6px rgba(0,0,0,0.5);
-  background: linear-gradient(135deg, #d0d0d0, #f0f0f0); /* metallic sheen */
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  border-radius: 10%;
-  transition: transform 0.3s, text-shadow 0.3s;
+  top: 50%;
+  left: 50%;
+  width: 80px;
+  height: 80px;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  filter: drop-shadow(2px 2px 5px rgba(0,0,0,0.5));
+  transition: transform 1s ease, opacity 1s ease;
 }
 
-/* Hover shimmer */
-.tool:hover {
-  transform: scale(1.3);
-  text-shadow: 2px 2px 12px rgba(0,0,0,0.6), 0 0 8px #fff;
+.tool img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: brightness(1.2) contrast(1.2);
 }
-
-/* Pop-in/out rotation animation */
-@keyframes rotate-tools {
-  0% { transform: rotate(0deg) translate(120px) rotate(0deg) scale(1);}
-  25% { transform: rotate(90deg) translate(130px) rotate(-90deg) scale(1.1);}
-  50% { transform: rotate(180deg) translate(120px) rotate(-180deg) scale(1);}
-  75% { transform: rotate(270deg) translate(130px) rotate(-270deg) scale(1.1);}
-  100% { transform: rotate(360deg) translate(120px) rotate(-360deg) scale(1);}
-}
-
-.tool {
-  animation: rotate-tools 20s linear infinite;
-}
-
-/* Tool initial positions */
-.tool1 { top: 0; left: 50%; transform: translate(-50%, -50%); }
-.tool2 { top: 25%; left: 90%; transform: translate(-50%, -50%); }
-.tool3 { top: 75%; left: 90%; transform: translate(-50%, -50%); }
-.tool4 { top: 100%; left: 50%; transform: translate(-50%, -50%); }
-.tool5 { top: 50%; left: 0%; transform: translate(-50%, -50%); }
 
 /* Services Section */
 .services {
-  padding: 3rem 1rem;
+  padding: 4rem 1rem;
   text-align: center;
+  background: #fff;
+  border-radius: 80px 80px 0 0;
 }
 
 .services h2 {
@@ -123,29 +137,30 @@ header {
 
 .cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem;
 }
 
 .card {
-  background: #fff;
-  padding: 1.5rem;
-  border-radius: 15px;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+  background: #fffcf0;
+  padding: 2rem;
+  border-radius: 25px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
   font-weight: bold;
   transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
 }
 
 /* About Section */
 .about {
-  padding: 3rem 1rem;
-  background: #fff;
+  padding: 4rem 1rem;
+  background: #f8f3e7;
   text-align: center;
+  border-radius: 50px 50px 0 0;
 }
 
 .about h2 {
@@ -157,14 +172,15 @@ header {
 footer {
   background: #007cff;
   color: #fff;
-  padding: 1rem;
+  padding: 1.5rem;
   text-align: center;
+  border-radius: 50px 50px 0 0;
 }
 
 /* Responsive */
 @media (max-width: 768px) {
-  .tool-circle { width: 180px; height: 180px; }
-  .tool { font-size: 1.5rem; }
-  .hero h1 { font-size: 1.5rem; }
+  .tool-carousel { height: 180px; }
+  .tool { width: 60px; height: 60px; }
+  .hero h1 { font-size: 1.8rem; }
   .hero-subtext { font-size: 1rem; }
 }
