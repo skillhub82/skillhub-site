@@ -3,8 +3,11 @@ body {
   margin: 0;
   font-family: 'Barlow', sans-serif;
   color: #222;
-  background:linear-gradient (135deg, #ffdd2f, #e45e0e);
-  text-align: center;
+  background:linear-gradient(135deg, #ffdd2f, #e45e0e);
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
 header {
@@ -12,7 +15,7 @@ header {
 }
 
 .logo {
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: 'Barlow Condensed semi-bold', sans-serif;
   font-weight: 600;
    font-size: 3rem;
   color: #007cff;
