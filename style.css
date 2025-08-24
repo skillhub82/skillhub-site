@@ -1,0 +1,92 @@
+/* General styles */
+body {
+  margin: 0;
+  font-family: 'Barlow', sans-serif;
+  color: #222;
+  background: #ffdd2f;
+  text-align: center;
+}
+
+header {
+  padding: 2rem 1rem;
+}
+
+.logo {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 600;
+  font-size: 3rem;
+  color: #007cff;
+  margin: 0;
+}
+
+.tagline {
+  font-family: 'Barlow', sans-serif;
+  font-size: 1.2rem;
+  margin-top: 0.5rem;
+}
+
+.hero {
+  padding: 3rem 1rem;
+}
+
+.hero h2 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.whatsapp-btn {
+  display: inline-block;
+  background: #007cff;
+  color: #fff;
+  padding: 0.8rem 1.5rem;
+  margin-top: 1rem;
+  border-radius: 8px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+.whatsapp-btn:hover {
+  background: #005bb5;
+}
+
+.services {
+  padding: 2rem 1rem;
+}
+
+.services h3 {
+  font-family: 'Barlow Condensed', sans-serif;
+  margin-bottom: 1.5rem;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  font-weight: bold;
+}
+
+.about {
+  padding: 2rem 1rem;
+  background: #fff;
+  margin-top: 2rem;
+}
+
+.contact {
+  padding: 2rem 1rem;
+}
+
+footer {
+  background: #007cff;
+  color: white;
+  padding: 1rem;
+  margin-top: 2rem;
+}
