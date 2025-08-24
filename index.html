@@ -2,180 +2,385 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SkillHub - Coming Soon</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SkillHub — Website Coming Soon</title>
+
+  <!-- Brand Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600&family=Barlow:wght@400;500&display=swap" rel="stylesheet">
+
   <style>
-    /* Reset */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    :root{
+      --brand-yellow:#ffdd2f;
+      --accent-blue:#007cff;
+      --fg:#eaeaea;
+      --muted:#b8b8b8;
+      --bg:#000000;
+      --bg2:#0a0a0a;
+      --energy1:#071a33;
+      --energy2:rgba(255,221,47,0.08);
+      --card:rgba(255,255,255,0.05);
+      --card-hover:rgba(255,255,255,0.08);
+      --shadow:0 10px 30px rgba(0,0,0,0.45);
+    }
+    /* Light theme vars */
+    body.light {
+      --fg:#111;
+      --muted:#444;
+      --bg:#f9fafb;
+      --bg2:#ffffff;
+      --energy1:#e8f2ff;
+      --energy2:rgba(255,221,47,0.15);
+      --card:#ffffff;
+      --card-hover:#fffef3;
+      --shadow:0 12px 24px rgba(0,0,0,0.12);
     }
 
-    body {
-      font-family: 'Barlow', sans-serif;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
-      background: linear-gradient(180deg, #000000 0%, #ffdd2f 100%);
-      color: white;
-      text-align: center;
-      overflow-x: hidden;
+    /* Global */
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:'Barlow',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      color:var(--fg);
+      background:
+        radial-gradient(1200px 600px at 20% -10%, var(--energy2), transparent 60%),
+        radial-gradient(900px 500px at 80% 110%, rgba(0,124,255,0.12), transparent 60%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg2) 45%, var(--bg) 100%);
+      transition: background 400ms ease, color 200ms ease;
+    }
+    a{color:inherit}
+
+    /* Layout container to feel “full” without hard cuts */
+    .wrap{
+      max-width:1100px;
+      margin:0 auto;
+      padding:24px clamp(16px, 3vw, 32px);
     }
 
-    header {
-      width: 100%;
-      padding: 1.5rem 2rem;
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
+    /* Header */
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+    .logo{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      text-decoration:none;
+    }
+    .logo__mark{
+      width:40px;height:40px; border-radius:12px;
+      background:conic-gradient(from 210deg, #2a2a2a, #6e6e6e, #1e1e1e, #5a5a5a, #2a2a2a);
+      box-shadow:var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+    .logo__toolbox{
+      position:absolute; inset:8px;
+      border-radius:8px;
+      background:linear-gradient(145deg, var(--accent-blue), #59a9ff);
+      box-shadow:inset 0 0 0 2px rgba(255,255,255,0.15), 0 6px 16px rgba(0,124,255,0.35);
+    }
+    .logo__text{
+      font-family:'Barlow Condensed',sans-serif;
+      font-weight:600;
+      font-size:clamp(28px, 5vw, 40px);
+      letter-spacing:0.5px;
+      color:var(--brand-yellow);
+      line-height:1;
     }
 
-    .logo {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 2.5rem;
-      font-weight: 600;
-      color: #ffdd2f;
+    /* Theme toggle */
+    .theme-toggle{
+      border:none; cursor:pointer;
+      width:42px;height:42px; border-radius:50%;
+      background:var(--card); color:var(--fg);
+      display:grid; place-items:center; font-size:18px;
+      box-shadow:var(--shadow);
+      transition:transform .2s ease, background .2s ease;
+    }
+    .theme-toggle:hover{ transform:translateY(-2px); background:var(--card-hover); }
+
+    /* Hero */
+    .hero{
+      padding: clamp(32px, 6vw, 64px) 0 clamp(24px, 5vw, 48px);
+      display:grid; grid-template-columns:1fr; gap:28px;
+      align-items:center; justify-items:center;
+      text-align:center;
+    }
+    .hero__title{
+      font-family:'Barlow Condensed',sans-serif;
+      font-size: clamp(28px, 6vw, 48px);
+      margin:8px 0 8px;
+      letter-spacing:.3px;
+    }
+    .hero__sub{
+      color:var(--muted);
+      font-size: clamp(16px, 2.6vw, 18px);
+      max-width:680px;
+      line-height:1.5;
     }
 
-    .coming-soon {
-      margin-top: 3rem;
-      font-size: 2rem;
-      font-weight: 600;
-      color: #007cff;
-      text-shadow: 0px 0px 6px rgba(0,0,0,0.4);
+    /* Tool stage — no emojis, inline SVG icons with metallic gradient */
+    .stage{
+      position:relative;
+      width:min(520px, 90vw);
+      height:220px;
+      margin:12px auto 4px;
+      overflow:hidden;
+    }
+    .tool{
+      position:absolute; top:50%; left:50%;
+      width:96px; height:96px;
+      transform:translate(-50%,-50%) scale(.6);
+      opacity:0;
+      filter: drop-shadow(0 14px 24px rgba(0,0,0,.55));
+      transition: transform 900ms cubic-bezier(.2, .8, .2, 1), opacity 900ms ease;
+      will-change: transform, opacity;
+    }
+    .tool svg{ width:100%; height:100%; display:block; }
+    .tool.active{
+      transform:translate(-50%,-50%) scale(1.06);
+      opacity:1;
+      animation: driftRight 2.3s 300ms forwards;
+    }
+    @keyframes driftRight{
+      0%   { transform: translate(-50%,-50%) scale(1.06); opacity:1; }
+      60%  { transform: translate(16%,-50%)  scale(1.00); opacity:1; }
+      100% { transform: translate(120%,-50%) scale(.88);  opacity:0; }
     }
 
-    .tagline {
-      font-size: 1.2rem;
-      margin-top: 0.5rem;
-      color: #ffffffcc;
+    /* CTA */
+    .cta{
+      display:flex; gap:12px; flex-wrap:wrap; justify-content:center;
+      margin-top:8px;
+    }
+    .btn{
+      display:inline-flex; align-items:center; gap:10px; text-decoration:none;
+      background:var(--accent-blue); color:#fff; font-weight:700;
+      padding:14px 20px; border-radius:14px;
+      box-shadow:0 10px 24px rgba(0,124,255,.35);
+      transition:transform .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+    .btn:hover{ transform:translateY(-2px); box-shadow:0 14px 30px rgba(0,124,255,.45); background:#0a6fe6; }
+    .btn svg{ width:20px; height:20px; }
+
+    /* Info band (Coming soon + services) — blended cards, not hard sections */
+    .band{
+      margin: clamp(28px, 6vw, 56px) 0 clamp(20px, 5vw, 40px);
+      display:grid; gap:18px;
+      grid-template-columns:1fr;
+    }
+    .notice, .services{
+      background: var(--card);
+      backdrop-filter: blur(6px);
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:18px;
+      padding:18px clamp(16px, 2.6vw, 24px);
+      box-shadow: var(--shadow);
+    }
+    .notice__title{
+      font-family:'Barlow Condensed',sans-serif;
+      font-size: clamp(20px, 4.6vw, 28px);
+      margin:0 0 6px;
+      color: var(--brand-yellow);
+    }
+    .notice__text{ color:var(--fg); opacity:.9; }
+
+    .services__title{
+      font-family:'Barlow Condensed',sans-serif;
+      font-size: clamp(18px, 4.2vw, 24px);
+      margin:0 0 8px;
+      color: var(--accent-blue);
+    }
+    .service-list{
+      display:grid; gap:10px;
+      grid-template-columns: 1fr;
+    }
+    .service-item{
+      display:flex; align-items:center; gap:12px;
+      padding:12px 12px;
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:12px;
+      transition: transform .2s ease, background .2s ease;
+    }
+    .service-item:hover{ transform: translateY(-2px); background: var(--card-hover); }
+    .service-dot{
+      width:8px; height:8px; border-radius:50%; background:var(--accent-blue);
+      box-shadow:0 0 0 4px rgba(0,124,255,.15);
     }
 
-    .services {
-      margin: 4rem 1rem;
-      font-size: 1.3rem;
-      list-style: none;
-      text-align: left;
-      max-width: 500px;
-      color: white;
+    /* Footer */
+    footer{
+      padding:24px 0 28px;
+      color:var(--muted);
+      text-align:center;
+      font-size:14px;
     }
 
-    .services li {
-      margin: 1rem 0;
-      padding: 0.75rem 1rem;
-      border-left: 4px solid #007cff;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 8px;
-    }
-
-    /* Tool Animation Area */
-    .tool-box {
-      margin: 3rem 0;
-      height: 100px;
-      width: 100%;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .tool {
-      position: absolute;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%) scale(0.5);
-      opacity: 0;
-      font-size: 2.5rem;
-      filter: drop-shadow(2px 4px 4px rgba(0,0,0,0.6));
-      transition: all 1s ease;
-    }
-
-    .tool.show {
-      transform: translateX(-50%) scale(1);
-      opacity: 1;
-      animation: moveRight 3s forwards;
-    }
-
-    @keyframes moveRight {
-      0% { transform: translateX(-50%) scale(0.5); opacity: 0; }
-      20% { transform: translateX(-50%) scale(1.1); opacity: 1; }
-      70% { transform: translateX(30%) scale(1); opacity: 1; }
-      100% { transform: translateX(120%) scale(0.8); opacity: 0; }
-    }
-
-    .cta {
-      margin: 3rem 0;
-    }
-
-    .cta a {
-      padding: 1rem 2rem;
-      background: #007cff;
-      color: white;
-      border-radius: 50px;
-      text-decoration: none;
-      font-size: 1.2rem;
-      transition: background 0.3s;
-    }
-
-    .cta a:hover {
-      background: #005bb5;
-    }
-
-    footer {
-      padding: 1rem;
-      font-size: 0.9rem;
-      color: #ffffff99;
+    /* Responsive enhancements */
+    @media (min-width: 820px){
+      .hero{
+        grid-template-columns: .9fr 1.1fr;
+        text-align:left; justify-items:stretch;
+      }
+      .hero__copy{ align-self:center; }
+      .hero__title{ margin-top:0 }
+      .band{ grid-template-columns: 1.1fr .9fr; }
+      .stage{ height:260px }
+      .tool{ width:110px; height:110px }
     }
   </style>
 </head>
 <body>
-  <header>
-    <div class="logo">SkillHub</div>
-  </header>
+  <div class="wrap">
+    <!-- Header -->
+    <header>
+      <a class="logo" href="#">
+        <span class="logo__mark"><span class="logo__toolbox"></span></span>
+        <span class="logo__text">SkillHub</span>
+      </a>
+      <button class="theme-toggle" id="themeToggle" title="Toggle theme" aria-label="Toggle theme">🌙</button>
+    </header>
 
-  <main>
-    <h1 class="coming-soon">🚧 Website Coming Soon 🚧</h1>
-    <p class="tagline">Professional Electrical & A/C Solutions at Your Fingertips</p>
+    <!-- Hero -->
+    <section class="hero">
+      <!-- Tool Stage -->
+      <div class="stage" aria-hidden="true">
+        <!-- Inline metallic gradients and 5 tool SVGs -->
+        <svg width="0" height="0" style="position:absolute">
+          <defs>
+            <!-- Steel gradient -->
+            <linearGradient id="steel" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#2a2a2a"/>
+              <stop offset="18%" stop-color="#bbbbbb"/>
+              <stop offset="38%" stop-color="#f2f2f2"/>
+              <stop offset="60%" stop-color="#a6a6a6"/>
+              <stop offset="80%" stop-color="#e6e6e6"/>
+              <stop offset="100%" stop-color="#3a3a3a"/>
+            </linearGradient>
+            <filter id="spec" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur in="SourceAlpha" stdDeviation="1.2" result="blur"/>
+              <feSpecularLighting in="blur" surfaceScale="4" specularConstant=".6" specularExponent="20" lighting-color="white" result="spec">
+                <fePointLight x="-40" y="-60" z="120"/>
+              </feSpecularLighting>
+              <feComposite in="spec" in2="SourceAlpha" operator="in"/>
+              <feComposite in="SourceGraphic" />
+            </filter>
 
-    <!-- Services -->
-    <ul class="services">
-      <li>A/C Maintenance & Installation</li>
-      <li>Other Electrical Services</li>
-    </ul>
+            <!-- Wrench -->
+            <symbol id="ic-wrench" viewBox="0 0 64 64">
+              <path fill="url(#steel)" filter="url(#spec)"
+                d="M58 10a14 14 0 0 1-18.4 13.2l-17 17a6 6 0 1 1-8.5-8.5l17-17A14 14 0 1 1 58 10ZM16 51l-3 3a4 4 0 1 1-5.7-5.7l3-3 5.7 5.7Z"/>
+            </symbol>
+            <!-- Hammer -->
+            <symbol id="ic-hammer" viewBox="0 0 64 64">
+              <path fill="url(#steel)" filter="url(#spec)"
+                d="M40 8h8l8 8-6 6-6-6-8 8-6-6 8-8ZM26 28l10 10L18 56a6 6 0 1 1-8.5-8.5L26 28Z"/>
+            </symbol>
+            <!-- Screwdriver -->
+            <symbol id="ic-screwdriver" viewBox="0 0 64 64">
+              <path fill="url(#steel)" filter="url(#spec)"
+                d="M38 10h8l2 6-8 8-6-2v-8l4-4Zm-3 16 7 7L20 55a6 6 0 0 1-8.5-8.5L35 26Z"/>
+            </symbol>
+            <!-- Pliers -->
+            <symbol id="ic-pliers" viewBox="0 0 64 64">
+              <path fill="url(#steel)" filter="url(#spec)"
+                d="M36 10h-8l-4 6 8 8 8-8-4-6Zm-4 16-6 6-12 18a6 6 0 1 0 9.9 6.6L32 40l8 16a6 6 0 1 0 9.9-6.6L38 32l-6-6Z"/>
+            </symbol>
+            <!-- Tape measure -->
+            <symbol id="ic-tape" viewBox="0 0 64 64">
+              <path fill="url(#steel)" filter="url(#spec)"
+                d="M20 28a12 12 0 0 1 12-12h6a18 18 0 1 1 0 36H16a8 8 0 0 1-8-8 14 14 0 0 1 12-16Zm28 8h8v8h-8v-8Z"/>
+            </symbol>
+          </defs>
+        </svg>
 
-    <!-- Tools Animation -->
-    <div class="tool-box">
-      <div class="tool">🔧</div>
-      <div class="tool">🔨</div>
-      <div class="tool">⚙️</div>
-      <div class="tool">🔩</div>
-      <div class="tool">🪛</div>
-    </div>
+        <!-- Tools (one visible at a time via JS) -->
+        <div class="tool" data-name="wrench"><svg><use href="#ic-wrench"/></svg></div>
+        <div class="tool" data-name="hammer"><svg><use href="#ic-hammer"/></svg></div>
+        <div class="tool" data-name="screwdriver"><svg><use href="#ic-screwdriver"/></svg></div>
+        <div class="tool" data-name="pliers"><svg><use href="#ic-pliers"/></svg></div>
+        <div class="tool" data-name="tape"><svg><use href="#ic-tape"/></svg></div>
+      </div>
 
-    <!-- CTA -->
-    <div class="cta">
-      <a href="https://wa.me/18762107638" target="_blank">📲 Contact Us on WhatsApp</a>
-    </div>
-  </main>
+      <!-- Copy + CTA -->
+      <div class="hero__copy">
+        <h1 class="hero__title">Professional Electrical & A/C Services</h1>
+        <p class="hero__sub">
+          We’re crafting a premium online experience. In the meantime, reach us directly for
+          <strong>A/C Maintenance & Installation</strong> and <strong>Other Electrical Services</strong>.
+        </p>
+        <div class="cta">
+          <a class="btn" href="https://wa.me/18762107638" target="_blank" rel="noopener">
+            <!-- WhatsApp icon -->
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.5 3.5A11.8 11.8 0 0 0 12 0C5.4 0 0 5.4 0 12c0 2.1.5 4.1 1.5 5.9L0 24l6.3-1.6A12 12 0 0 0 12 24c6.6 0 12-5.4 12-12 0-3.2-1.2-6.2-3.5-8.5Zm-8.5 18a9.9 9.9 0 0 1-5.1-1.4l-.4-.2-3.7 1 .9-3.6-.2-.4A9.9 9.9 0 1 1 12 21.5Zm5.7-7.2c-.3-.1-1.7-.9-2-.9s-.5 0-.7.3-.8.9-1 1.1-.4.2-.7.1a8.1 8.1 0 0 1-2.4-1.5 9.2 9.2 0 0 1-1.7-2.1c-.2-.4 0-.6.1-.8l.5-.6c.2-.3.3-.5.4-.7 0-.2 0-.5-.1-.6-.1-.2-.7-1.6-1-2.2-.3-.6-.5-.5-.7-.5h-.6a1.1 1.1 0 0 0-.8.4c-.3.3-1 1-1 2.4 0 1.4 1 2.7 1.2 2.9.1.2 2 3.2 4.8 4.5.7.3 1.2.6 1.7.7.7.2 1.3.2 1.8.1.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.3 0-.1-.1-.2-.4-.3Z"/></svg>
+            Chat on WhatsApp
+          </a>
+        </div>
+      </div>
+    </section>
 
-  <footer>
-    © 2025 SkillHub. All rights reserved.
-  </footer>
+    <!-- Soft “band” content (no hard cuts) -->
+    <section class="band">
+      <article class="notice">
+        <h3 class="notice__title">⚡ Website Coming Soon</h3>
+        <p class="notice__text">
+          We’re finalizing a beautiful, full-featured site. This is a preview so customers can still reach us quickly.
+        </p>
+      </article>
+
+      <aside class="services">
+        <h4 class="services__title">Our Services</h4>
+        <div class="service-list">
+          <div class="service-item"><span class="service-dot"></span> A/C Maintenance & Installation</div>
+          <div class="service-item"><span class="service-dot"></span> Other Electrical Services</div>
+        </div>
+      </aside>
+    </section>
+
+    <!-- Footer -->
+    <footer>© 2025 SkillHub. All rights reserved.</footer>
+  </div>
 
   <script>
-    // Animate tools one by one
-    const tools = document.querySelectorAll('.tool');
-    let index = 0;
+    /* ---------- Theme: auto-detect + toggle, with persistence ---------- */
+    (function(){
+      const saved = localStorage.getItem('skillhub-theme');
+      if(saved){
+        document.body.classList.toggle('light', saved === 'light');
+      }else{
+        // Auto-detect system preference; default to dark if no matchMedia
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.body.classList.toggle('light', !prefersDark ? true : false);
+        // ^ We default to dark; if system prefers dark, keep dark. If system prefers light, set light.
+      }
+      const btn = document.getElementById('themeToggle');
+      const applyIcon = () => btn.textContent = document.body.classList.contains('light') ? '☀️' : '🌙';
+      applyIcon();
+      btn.addEventListener('click', ()=>{
+        document.body.classList.toggle('light');
+        localStorage.setItem('skillhub-theme', document.body.classList.contains('light') ? 'light' : 'dark');
+        applyIcon();
+      });
+    })();
 
-    function showNextTool() {
-      tools.forEach(t => t.classList.remove('show'));
-      tools[index].classList.add('show');
-      index = (index + 1) % tools.length;
-    }
-
-    setInterval(showNextTool, 2500);
-    showNextTool(); // initial
+    /* ---------- Tool carousel: pop from center, drift right, fade ---------- */
+    (function(){
+      const tools = Array.from(document.querySelectorAll('.tool'));
+      let i = 0;
+      function next(){
+        tools.forEach(t => t.classList.remove('active'));
+        const el = tools[i];
+        el.classList.add('active');
+        i = (i + 1) % tools.length;
+      }
+      next();
+      setInterval(next, 2300);
+    })();
   </script>
 </body>
 </html>
