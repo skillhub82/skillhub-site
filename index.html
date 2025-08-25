@@ -1,198 +1,349 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SKILLHUB</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SKILLHUB — Website Coming Soon</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600&family=Barlow:wght@400;500&display=swap" rel="stylesheet">
+
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #f9f9f9;
-      color: #222;
-      transition: background-color 0.4s, color 0.4s;
-      overflow-x: hidden;
+    :root{
+      --brand-yellow:#ffdd2f;
+      --accent-blue:#007cff;
+      --fg:#eaeaea;
+      --muted:#b8b8b8;
+      --bg:#000000;
+      --bg2:#0a0a0a;
+      --energy1:#071a33;
+      --energy2:rgba(255,221,47,0.08);
+      --card:rgba(255,255,255,0.05);
+      --card-hover:rgba(255,255,255,0.08);
+      --shadow:0 12px 30px rgba(0,0,0,0.45);
     }
-    body.dark {
-      background-color: #1a1a1a;
-      color: #f0f0f0;
-    }
-
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 2rem;
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .logo img {
-      width: 50px;
-      height: auto;
+    body.light{
+      --fg:#111;
+      --muted:#444;
+      --bg:#f7f8fb;
+      --bg2:#ffffff;
+      --energy1:#eaf3ff;
+      --energy2:rgba(255,221,47,0.14);
+      --card:#ffffff;
+      --card-hover:#fffef3;
+      --shadow:0 12px 24px rgba(0,0,0,0.12);
     }
 
-    .logo span {
-      font-size: 2rem;
-      font-weight: bold;
-      transition: color 0.4s;
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:'Barlow',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      color:var(--fg);
+      background:
+        radial-gradient(1200px 700px at 15% -10%, var(--energy2), transparent 60%),
+        radial-gradient(900px 500px at 90% 110%, rgba(0,124,255,0.12), transparent 60%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg2) 50%, var(--bg) 100%);
+      transition: background 400ms ease, color 200ms ease;
+      overflow-x:hidden;
+    }
+    a{color:inherit}
+
+    .wrap{
+      max-width:1100px;
+      margin:0 auto;
+      padding:24px clamp(16px, 3vw, 32px);
     }
 
-    body.light .logo span {
-      color: #000;
+    header{
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:14px; text-decoration:none;
+    }
+    .logo-img{
+      width:44px; height:44px; border-radius:10px; object-fit:cover;
+      box-shadow:var(--shadow);
+    }
+    .wordmark{
+      font-family:'Barlow Condensed',sans-serif; font-weight:600;
+      font-size:clamp(28px, 5vw, 40px); letter-spacing:.2px; color:var(--brand-yellow);
+      line-height:1;
     }
 
-    body.dark .logo span {
-      color: #06DAFF; /* brand blue highlight */
+    .theme-toggle{
+      border:none; cursor:pointer;
+      width:42px; height:42px; border-radius:50%;
+      background:var(--card); color:var(--fg);
+      display:grid; place-items:center; font-size:18px;
+      box-shadow:var(--shadow); transition:transform .2s, background .2s;
+    }
+    .theme-toggle:hover{ transform:translateY(-2px); background:var(--card-hover); }
+
+    .hero{
+      padding: clamp(32px, 6vw, 64px) 0 clamp(24px, 5vw, 48px);
+      display:grid; grid-template-columns:1fr; gap:28px;
+      align-items:center; justify-items:center; text-align:center;
+    }
+    .hero__title{
+      font-family:'Barlow Condensed',sans-serif;
+      font-size: clamp(28px, 6vw, 48px);
+      margin:8px 0;
+    }
+    .hero__sub{
+      color:var(--muted); font-size: clamp(16px, 2.6vw, 18px);
+      max-width:720px; line-height:1.5;
     }
 
-    /* Dark mode toggle */
-    .toggle-wrapper {
-      position: relative;
+    /* Tool stage */
+    .stage{
+      position:relative; width:min(560px, 92vw); height:260px; margin:6px auto 8px; overflow:hidden;
     }
-    .toggle {
-      width: 60px;
-      height: 30px;
-      background: #ddd;
-      border-radius: 30px;
-      position: relative;
-      cursor: pointer;
+    .tool{
+      position:absolute; top:50%; left:50%;
+      width:112px; height:112px;
+      transform:translate(-50%,-50%) scale(.6); opacity:0;
+      filter: drop-shadow(0 14px 28px rgba(0,0,0,.55));
+      transition: transform 900ms cubic-bezier(.2,.8,.2,1), opacity 900ms ease;
+      will-change: transform, opacity;
     }
-    .toggle::before {
-      content: "☀️";
-      position: absolute;
-      left: 5px;
-      top: 4px;
-      font-size: 18px;
+    .tool svg{ width:100%; height:100%; display:block; }
+    .tool.active{
+      transform:translate(-50%,-50%) scale(1.05);
+      opacity:1;
+      animation: driftRight 2.6s 250ms forwards;
     }
-    .toggle::after {
-      content: "🌙";
-      position: absolute;
-      right: 5px;
-      top: 4px;
-      font-size: 18px;
-    }
-    .slider {
-      position: absolute;
-      top: 3px;
-      left: 3px;
-      width: 24px;
-      height: 24px;
-      background: white;
-      border-radius: 50%;
-      transition: transform 0.3s ease;
-    }
-    body.dark .slider {
-      transform: translateX(30px);
+    @keyframes driftRight{
+      0%   { transform: translate(-50%,-50%) scale(1.05); opacity:1; }
+      60%  { transform: translate(10%,-50%)  scale(1.00); opacity:1; }
+      100% { transform: translate(125%,-50%) scale(.9);   opacity:0; }
     }
 
-    /* Popup text */
-    .popup {
-      position: absolute;
-      top: 50%;
-      left: 105%;
-      transform: translateY(-50%);
-      background: transparent;
-      color: #06DAFF;
-      font-size: 0.9rem;
-      opacity: 0;
-      white-space: nowrap;
-      animation: none;
+    .cta{ display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:12px; }
+    .btn{
+      display:inline-flex; align-items:center; gap:10px; text-decoration:none;
+      background:var(--accent-blue); color:#fff; font-weight:700;
+      padding:14px 20px; border-radius:14px;
+      box-shadow:0 10px 24px rgba(0,124,255,.35);
+      transition:transform .2s, box-shadow .2s, background .2s;
     }
-    .popup.show {
-      animation: fadeInOut 3s forwards;
-    }
-    @keyframes fadeInOut {
-      0% { opacity: 0; transform: translateY(-50%) translateX(10px); }
-      10% { opacity: 1; transform: translateY(-50%) translateX(0); }
-      70% { opacity: 1; transform: translateY(-50%) translateX(0); }
-      100% { opacity: 0; transform: translateY(-50%) translateX(-10px); }
-    }
+    .btn:hover{ transform:translateY(-2px); box-shadow:0 14px 30px rgba(0,124,255,.45); background:#0a6fe6; }
+    .btn svg{ width:20px; height:20px; }
 
-    /* Tools carousel */
-    .carousel {
-      display: flex;
-      overflow: hidden;
-      margin: 2rem auto;
-      width: 80%;
+    .band{
+      margin: clamp(28px, 6vw, 56px) 0 clamp(20px, 5vw, 40px);
+      display:grid; gap:18px; grid-template-columns:1fr;
     }
-    .carousel-track {
-      display: flex;
-      animation: slide 12s linear infinite;
+    .notice, .services{
+      background: var(--card); backdrop-filter: blur(6px);
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:18px; padding:18px clamp(16px, 2.6vw, 24px);
+      box-shadow: var(--shadow);
     }
-    .carousel svg {
-      width: 60px;
-      height: 60px;
-      margin: 0 15px;
-      fill: url(#metalGradient);
-      filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.3));
+    .notice__title{
+      font-family:'Barlow Condensed',sans-serif; font-size: clamp(20px, 4.6vw, 28px);
+      margin:0 0 6px; color: var(--brand-yellow);
     }
-    @keyframes slide {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
+    .notice__text{ color:var(--fg); opacity:.95; }
 
+    .services__title{
+      font-family:'Barlow Condensed',sans-serif; font-size: clamp(18px, 4.2vw, 24px);
+      margin:0 0 8px; color: var(--accent-blue);
+    }
+    .service-list{ display:grid; gap:10px; grid-template-columns: 1fr; }
+    .service-item{
+      display:flex; align-items:center; gap:12px; padding:12px 12px;
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border:1px solid rgba(255,255,255,.06); border-radius:12px;
+      transition: transform .2s, background .2s;
+    }
+    .service-item:hover{ transform: translateY(-2px); background: var(--card-hover); }
+    .service-dot{ width:8px; height:8px; border-radius:50%; background:var(--accent-blue); box-shadow:0 0 0 4px rgba(0,124,255,.15); }
+
+    footer{ padding:24px 0 28px; color:var(--muted); text-align:center; font-size:14px; }
+
+    @media (min-width: 820px){
+      .hero{ grid-template-columns: .95fr 1.05fr; text-align:left; justify-items:stretch; }
+      .hero__copy{ align-self:center; }
+      .hero__title{ margin-top:0 }
+      .band{ grid-template-columns: 1.1fr .9fr; }
+    }
   </style>
 </head>
-<body class="light">
-  <header>
-    <div class="logo">
-      <!-- Your toolbox logo -->
-      <img src="toolbox-blue.svg" alt="Toolbox Logo">
-      <span>SKILLHUB</span>
-    </div>
+<body>
+  <div class="wrap">
+    <!-- Header -->
+    <header>
+      <a class="brand" href="#" aria-label="SKILLHUB Home">
+        <img src="2.png" alt="SKILLHUB logo" class="logo-img" />
+        <span class="wordmark">SKILLHUB</span>
+      </a>
+      <button class="theme-toggle" id="themeToggle" title="Toggle theme" aria-label="Toggle theme">🌙</button>
+    </header>
 
-    <div class="toggle-wrapper">
-      <div class="toggle" id="toggle">
-        <div class="slider"></div>
+    <!-- Hero -->
+    <section class="hero">
+      <!-- Tool Stage (improved metallic SVGs) -->
+      <div class="stage" aria-hidden="true">
+        <!-- Shared gradients & highlights -->
+        <svg width="0" height="0" style="position:absolute">
+          <defs>
+            <!-- Polished steel gradient -->
+            <linearGradient id="steel" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%"   stop-color="#2b2b2b"/>
+              <stop offset="18%"  stop-color="#bfbfbf"/>
+              <stop offset="38%"  stop-color="#f3f3f3"/>
+              <stop offset="60%"  stop-color="#9c9c9c"/>
+              <stop offset="80%"  stop-color="#e7e7e7"/>
+              <stop offset="100%" stop-color="#333"/>
+            </linearGradient>
+            <!-- Subtle blue rim light for brand cohesion -->
+            <linearGradient id="rim" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="rgba(0,124,255,0.8)"/>
+              <stop offset="100%" stop-color="transparent"/>
+            </linearGradient>
+            <filter id="metalGloss" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur in="SourceAlpha" stdDeviation="1.2" result="blur"/>
+              <feSpecularLighting in="blur" surfaceScale="5" specularConstant=".6" specularExponent="20" lighting-color="#ffffff" result="spec">
+                <fePointLight x="-80" y="-60" z="160"/>
+              </feSpecularLighting>
+              <feComposite in="spec" in2="SourceAlpha" operator="in"/>
+              <feComposite in="SourceGraphic"/>
+            </filter>
+
+            <!-- ICONS: refined shapes (wrench, screwdriver, hammer, pliers, drill) -->
+            <symbol id="ic-wrench" viewBox="0 0 64 64">
+              <g filter="url(#metalGloss)">
+                <path fill="url(#steel)"
+                  d="M58 10a14 14 0 0 1-18.4 13.2l-17 17a6 6 0 1 1-8.5-8.5l17-17A14 14 0 1 1 58 10Z"/>
+                <rect x="8" y="48" width="10" height="8" rx="4" fill="url(#steel)" />
+              </g>
+              <rect x="10" y="49" width="6" height="6" rx="3" fill="url(#rim)"/>
+            </symbol>
+
+            <symbol id="ic-screwdriver" viewBox="0 0 64 64">
+              <g filter="url(#metalGloss)">
+                <path fill="url(#steel)"
+                  d="M40 8h8l2 6-8 8-6-2v-8l4-4Zm-5 18 7 7-19 19a6 6 0 0 1-8.5-8.5L35 26Z"/>
+                <rect x="44" y="8" width="6" height="10" rx="2" fill="url(#rim)"/>
+              </g>
+            </symbol>
+
+            <symbol id="ic-hammer" viewBox="0 0 64 64">
+              <g filter="url(#metalGloss)">
+                <path fill="url(#steel)"
+                  d="M40 8h8l8 8-6 6-6-6-8 8-6-6 8-8Z"/>
+                <path fill="url(#steel)"
+                  d="M26 28l10 10L18 56a6 6 0 1 1-8.5-8.5L26 28Z"/>
+              </g>
+            </symbol>
+
+            <symbol id="ic-pliers" viewBox="0 0 64 64">
+              <g filter="url(#metalGloss)">
+                <path fill="url(#steel)"
+                  d="M36 10h-8l-4 6 8 8 8-8-4-6Z"/>
+                <path fill="url(#steel)"
+                  d="M32 26 26 32 14 50a6 6 0 1 0 9.9 6.6L32 40l8 16a6 6 0 1 0 9.9-6.6L38 32l-6-6Z"/>
+              </g>
+            </symbol>
+
+            <symbol id="ic-drill" viewBox="0 0 64 64">
+              <g filter="url(#metalGloss)">
+                <rect x="10" y="20" width="34" height="14" rx="6" fill="url(#steel)"/>
+                <rect x="20" y="34" width="10" height="14" rx="3" fill="url(#steel)"/>
+                <path d="M44 24h10v6H44z" fill="url(#steel)"/>
+                <path d="M54 27l8 3-8 3v-6z" fill="url(#steel)"/>
+              </g>
+            </symbol>
+          </defs>
+        </svg>
+
+        <div class="tool" data-name="wrench"><svg><use href="#ic-wrench"/></svg></div>
+        <div class="tool" data-name="screwdriver"><svg><use href="#ic-screwdriver"/></svg></div>
+        <div class="tool" data-name="hammer"><svg><use href="#ic-hammer"/></svg></div>
+        <div class="tool" data-name="pliers"><svg><use href="#ic-pliers"/></svg></div>
+        <div class="tool" data-name="drill"><svg><use href="#ic-drill"/></svg></div>
       </div>
-      <div class="popup" id="popup">Who turned out the lights!</div>
-    </div>
-  </header>
 
-  <!-- SVG gradient for shiny silver -->
-  <svg width="0" height="0">
-    <defs>
-      <linearGradient id="metalGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="#d9d9d9"/>
-        <stop offset="50%" stop-color="#ffffff"/>
-        <stop offset="100%" stop-color="#a6a6a6"/>
-      </linearGradient>
-    </defs>
-  </svg>
+      <!-- Copy + CTA (referral positioning) -->
+      <div class="hero__copy">
+        <h1 class="hero__title">We Connect You with Trusted Pros</h1>
+        <p class="hero__sub">
+          SKILLHUB is a <strong>referral service</strong> — we match you with vetted professionals.
+          Electricians are just the beginning. While the full site is in the works, contact us for
+          <strong>A/C Maintenance & Installation</strong> and a full range of
+          <strong>Electrical Services</strong>.
+        </p>
+        <div class="cta">
+          <a class="btn" href="https://wa.me/18762107638" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.5 3.5A11.8 11.8 0 0 0 12 0C5.4 0 0 5.4 0 12c0 2.1.5 4.1 1.5 5.9L0 24l6.3-1.6A12 12 0 0 0 12 24c6.6 0 12-5.4 12-12 0-3.2-1.2-6.2-3.5-8.5Zm-8.5 18a9.9 9.9 0 0 1-5.1-1.4l-.4-.2-3.7 1 .9-3.6-.2-.4A9.9 9.9 0 1 1 12 21.5Zm5.7-7.2c-.3-.1-1.7-.9-2-.9s-.5 0-.7.3-.8.9-1 1.1-.4.2-.7.1a8.1 8.1 0 0 1-2.4-1.5 9.2 9.2 0 0 1-1.7-2.1c-.2-.4 0-.6.1-.8l.5-.6c.2-.3.3-.5.4-.7 0-.2 0-.5-.1-.6-.1-.2-.7-1.6-1-2.2-.3-.6-.5-.5-.7-.5h-.6a1.1 1.1 0 0 0-.8.4c-.3.3-1 1-1 2.4 0 1.4 1 2.7 1.2 2.9.1.2 2 3.2 4.8 4.5.7.3 1.2.6 1.7.7.7.2 1.3.2 1.8.1.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.3 0-.1-.1-.2-.4-.3Z"/></svg>
+            Chat on WhatsApp
+          </a>
+        </div>
+      </div>
+    </section>
 
-  <!-- Tools carousel -->
-  <div class="carousel">
-    <div class="carousel-track">
-      <!-- Hammer -->
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M294.1 95.3 231 32.2c-12.5-12.5-32.8-12.5-45.3 0l-22.6 22.6c-12.5 12.5-12.5 32.8 0 45.3l63.1 63.1L38.6 351.7c-9.4 9.4-9.4 24.6 0 33.9l45.3 45.3c9.4 9.4 24.6 9.4 33.9 0l187.5-187.5 63.1 63.1c12.5 12.5 32.8 12.5 45.3 0l22.6-22.6c12.5-12.5 12.5-32.8 0-45.3L316.8 95.3c-12.5-12.5-32.8-12.5-45.3 0z"/></svg>
-      <!-- Wrench -->
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M507.7 109.1 402.9 213.9l-104-104 104.8-104.8c-50.3-14.5-106.1-2.1-145.5 37.4-39.4 39.4-51.9 95.2-37.4 145.5L116.1 296.7l-54.3-5.4L5 348.1l158.9 158.9c25.6 25.6 67.2 25.6 92.8 0l52.8-52.8-5.4-54.3 108.6-104.8c50.3 14.5 106.1 2.1 145.5-37.4 39.5-39.5 51.9-95.2 37.5-145.6z"/></svg>
-      <!-- Screwdriver -->
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M0 0h64v64H0zM96 0h64v64H96zM192 0h64v64h-64zM0 96h64v64H0zM96 96h64v64H96zM192 96h64v64h-64zM0 192h64v64H0zM96 192h64v64H96zM192 192h64v64h-64z"/></svg>
-      <!-- Saw -->
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path d="M0 160L160 0l480 480-160 32-128-128-64 64L0 160z"/></svg>
-    </div>
+    <!-- Blended info band -->
+    <section class="band">
+      <article class="notice">
+        <h3 class="notice__title">⚡ Website Coming Soon</h3>
+        <p class="notice__text">
+          We’re crafting a premium experience. Until launch, this page helps you reach us fast.
+          More trades and services are being added.
+        </p>
+      </article>
+
+      <aside class="services">
+        <h4 class="services__title">Our Services</h4>
+        <div class="service-list">
+          <div class="service-item"><span class="service-dot"></span> A/C Maintenance & Installation</div>
+          <div class="service-item"><span class="service-dot"></span> Wiring (New & Upgrades)</div>
+          <div class="service-item"><span class="service-dot"></span> Electrical Repairs</div>
+          <div class="service-item"><span class="service-dot"></span> Inspections & Troubleshooting</div>
+          <div class="service-item"><span class="service-dot"></span> Other Electrical Services</div>
+          <div class="service-item"><span class="service-dot"></span> More trades coming soon…</div>
+        </div>
+      </aside>
+    </section>
+
+    <footer>© <span id="yr"></span> SKILLHUB. All rights reserved.</footer>
   </div>
 
   <script>
-    const toggle = document.getElementById('toggle');
-    const body = document.body;
-    const popup = document.getElementById('popup');
+    /* Year */
+    document.getElementById('yr').textContent = new Date().getFullYear();
 
-    toggle.addEventListener('click', () => {
-      body.classList.toggle('dark');
-      body.classList.toggle('light');
-
-      if (body.classList.contains('dark')) {
-        popup.classList.add('show');
-        setTimeout(() => popup.classList.remove('show'), 3000);
+    /* Theme: auto-detect + toggle with persistence */
+    (function(){
+      const saved = localStorage.getItem('skillhub-theme');
+      if(saved){
+        document.body.classList.toggle('light', saved === 'light');
+      }else{
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        // Default to dark unless system prefers light
+        document.body.classList.toggle('light', !prefersDark);
       }
-    });
+      const btn = document.getElementById('themeToggle');
+      const icon = () => btn.textContent = document.body.classList.contains('light') ? '☀️' : '🌙';
+      icon();
+      btn.addEventListener('click', ()=>{
+        document.body.classList.toggle('light');
+        localStorage.setItem('skillhub-theme', document.body.classList.contains('light') ? 'light' : 'dark');
+        icon();
+      });
+    })();
+
+    /* Tool carousel: center pop → drift right → fade, one at a time */
+    (function(){
+      const tools = Array.from(document.querySelectorAll('.tool'));
+      let i = 0;
+      function next(){
+        tools.forEach(t => t.classList.remove('active'));
+        tools[i].classList.add('active');
+        i = (i + 1) % tools.length;
+      }
+      next();
+      setInterval(next, 2400);
+    })();
   </script>
 </body>
-</html>
+                </html>
