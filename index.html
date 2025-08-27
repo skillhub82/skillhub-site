@@ -56,7 +56,7 @@
     header{ display:flex; align-items:center; justify-content:space-between; gap:12px; }
     .brand{ display:flex; align-items:center; gap:14px; text-decoration:none; }
     .logo-img{
-      width:120px; height:auto; object-fit:contain; /* smaller icon, text-dominant */
+      width:6px; height:6px; object-fit:contain; /* smaller icon, text-dominant */
       filter: drop-shadow(0 6px 14px rgba(0,0,0,.35));
     }
     .wordmark{
@@ -192,8 +192,11 @@
     <header>
       <a class="brand" href="#" aria-label="SKILLHUB Home">
         <!-- Your blue toolbox icon file, kept as-is (always blue) -->
-        <img src="Untitled (3).png" alt="SKILLHUB toolbox logo" class="logo-img" />
-        <span class="wordmark">SKILLHUB</span>
+        <img src="Untitled (3).png" alt="toolbox.svg" class="toolbox" />
+        <span  .toolbox {
+  width: 120px;
+  height: auto;   
+}class="wordmark">SKILLHUB </span>
       </a>
 
       <div class="toggle-wrap">
