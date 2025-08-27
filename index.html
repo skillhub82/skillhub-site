@@ -56,7 +56,7 @@
     header{ display:flex; align-items:center; justify-content:space-between; gap:12px; }
     .brand{ display:flex; align-items:center; gap:14px; text-decoration:none; }
     .logo-img{
-      width:0 6px; height:0 6px; object-fit:contain; /* smaller icon, text-dominant */
+      width:36px; height:36px; object-fit:contain; /* smaller icon, text-dominant */
       filter: drop-shadow(0 6px 14px rgba(0,0,0,.35));
     }
     .wordmark{
@@ -78,7 +78,7 @@
     .mode-pop{
       position:absolute; right:48px; top:50%; transform:translateY(-50%) translateX(8px);
       background:rgba(6,218,255,0.12); border:1px solid rgba(6,218,255,0.4);
-      color:var(--fg); padding:6px 10px; border-radius:10px; font-size:8px;
+      color:var(--fg); padding:6px 10px; border-radius:10px; font-size:12px;
       opacity:0; pointer-events:none; white-space:nowrap;
     }
     .mode-pop.show{
@@ -192,11 +192,13 @@
     <header>
       <a class="brand" href="#" aria-label="SKILLHUB Home">
         <!-- Your blue toolbox icon file, kept as-is (always blue) -->
-        <img src="Untitled (3).png" alt="toolbox.svg" class="toolbox" />
-        <span  .toolbox {
-  width: 120px;
-  height: auto;   
-}class="wordmark">SKILLHUB </span>
+        <img src="Untitled (3).png" alt="SKILLHUB toolbox logo" class="logo-img" />
+        .toolbox {
+  width: 120px;   /* increase or decrease this */
+  height: auto;   /* keeps proportions */
+}
+
+        <span class="wordmark">SKILLHUB</span>
       </a>
 
       <div class="toggle-wrap">
@@ -410,4 +412,4 @@
     })();
   </script>
 </body>
-  </html>
+                </html>
