@@ -410,5 +410,83 @@
       });
     })();
   </script>
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <!-- Metallic look via gradient and gloss -->
+    <linearGradient id="steel" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#bbb"/>
+      <stop offset="50%" stop-color="#fff"/>
+      <stop offset="100%" stop-color="#666"/>
+    </linearGradient>
+    <filter id="metalGloss" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="1" result="blur"/>
+      <feSpecularLighting in="blur" surfaceScale="5" specularConstant=".5" specularExponent="20" lighting-color="#ffffff" result="spec">
+        <fePointLight x="-50" y="-50" z="200"/>
+      </feSpecularLighting>
+      <feComposite in="spec" in2="SourceAlpha" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+
+    <!-- Tool symbols -->
+    <symbol id="tool-hammer" viewBox="0 0 64 64">
+      <g filter="url(#metalGloss)">
+        <!-- Hammer shape -->
+        <path fill="url(#steel)" d="M10 54l20-20 8 8-20 20z"/>
+        <rect x="28" y="14" width="8" height="24" rx="2" fill="url(#steel)"/>
+      </g>
+    </symbol>
+
+    <symbol id="tool-wrench" viewBox="0 0 64 64">
+      <g filter="url(#metalGloss)">
+        <path fill="url(#steel)" d="M50 10l4 4-20 20-4-4 20-20z"/>
+        <circle cx="18" cy="36" r="10" fill="url(#steel)"/>
+      </g>
+    </symbol>
+
+    <symbol id="tool-screwdriver" viewBox="0 0 64 64">
+      <g filter="url(#metalGloss)">
+        <rect x="28" y="10" width="8" height="28" fill="url(#steel)"/>
+        <path fill="url(#steel)" d="M32 6l4 4-4 4-4-4z"/>
+        <rect x="20" y="38" width="24" height="8" rx="4" fill="url(#steel)"/>
+      </g>
+    </symbol>
+
+    <symbol id="tool-pliers" viewBox="0 0 64 64">
+      <g filter="url(#metalGloss)">
+        <circle cx="32" cy="32" r="4" fill="#ccc"/>
+        <path fill="url(#steel)" d="M12 54l20-20 8 8-20 20z"/>
+        <path fill="url(#steel)" d="M52 54l-20-20-8 8 20 20z"/>
+      </g>
+    </symbol>
+
+    <symbol id="tool-drill" viewBox="0 0 64 64">
+      <g filter="url(#metalGloss)">
+        <rect x="12" y="22" width="30" height="12" rx="6" fill="url(#steel)"/>
+        <rect x="25" y="34" width="10" height="20" rx="3" fill="url(#steel)"/>
+      </g>
+    </symbol>
+
+    <symbol id="tool-saw" viewBox="0 0 64 64">
+      <g filter="url(#metalGloss)">
+        <path fill="url(#steel)" d="M8 44l20-20 24 24-4 4z"/>
+        <path d="M12 48l4 4 4-4 4 4 4-4" stroke="#ddd" stroke-width="2"/>
+      </g>
+    </symbol>
+
+    <symbol id="tool-tape" viewBox="0 0 64 64">
+      <g filter="url(#metalGloss)">
+        <rect x="12" y="28" width="24" height="14" rx="7" fill="url(#steel)"/>
+        <circle cx="24" cy="35" r="4" fill="#f2f2f2"/>
+      </g>
+    </symbol>
+
+    <symbol id="tool-hardhat" viewBox="0 0 64 64">
+      <g filter="url(#metalGloss)">
+        <path fill="url(#steel)" d="M12 32c0-12 8-20 20-20s20 8 20 20"/>
+        <rect x="12" y="32" width="40" height="12" rx="6" fill="url(#steel)"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
 </body>
                 </html>
