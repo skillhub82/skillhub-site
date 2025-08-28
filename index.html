@@ -2,374 +2,156 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SKILLHUB — Website Coming Soon</title>
-
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600&family=Barlow:wght@400;500&display=swap" rel="stylesheet">
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SkillHub</title>
   <style>
-    /* ===== THEME & BRAND ===== */
-    :root{
-      --brand-yellow:#ffdd2f;
-      --accent-blue:#007cff;              /* brand highlight (per your note) */
-      --fg:#eaeaea;
-      --muted:#b8b8b8;
-      --bg:#000000;
-      --bg2:#0a0a0a;
-      --energy2:rgba(255,221,47,0.08);
-      --card:rgba(255,255,255,0.05);
-      --card-hover:rgba(255,255,255,0.08);
-      --shadow:0 12px 30px rgba(0,0,0,0.45);
-      --logo: var(--brand-yellow);         /* SKILLHUB word color (dark) */
-    }
-    body.light{
-      --fg:#111;
-      --muted:#444;
-      --bg:#f7f8fb;
-      --bg2:#ffffff;
-      --energy2:rgba(255,221,47,0.14);
-      --card:#ffffff;
-      --card-hover:#fffef3;
-      --shadow:0 12px 24px rgba(0,0,0,0.12);
-      --logo:#000000;                      /* SKILLHUB word color (light) */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: white;
+      color: black;
+      transition: background-color 0.3s, color 0.3s;
     }
 
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family:'Barlow',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-      color:var(--fg);
-      background:
-        radial-gradient(1200px 700px at 15% -10%, var(--energy2), transparent 60%),
-        radial-gradient(900px 500px at 90% 110%, rgba(6,218,255,0.10), transparent 60%),
-        linear-gradient(180deg, var(--bg) 0%, var(--bg2) 50%, var(--bg) 100%);
-      transition: background 400ms ease, color 200ms ease;
-      overflow-x:hidden;
-    }
-    a{color:inherit}
-
-    .wrap{ max-width:1100px; margin:0 auto; padding:24px clamp(16px, 3vw, 32px); }
-
-    /* ===== HEADER ===== */
-    header{ display:flex; align-items:center; justify-content:space-between; gap:12px; }
-    .brand{ display:flex; align-items:center; gap:14px; text-decoration:none; }
-    .logo-img{
-      width:36px; height:36px; object-fit:contain; /* smaller icon, text-dominant */
-      filter: drop-shadow(0 6px 14px rgba(0,0,0,.35));
-    }
-    .wordmark{
-      font-family:'Barlow Condensed',sans-serif; font-weight:600;
-      font-size:clamp(34px, 5.6vw, 46px); letter-spacing:.2px; color:var(--logo);
-      line-height:1;
+    body.dark-mode {
+      background-color: #1c1c1c;
+      color: white;
     }
 
-    .toggle-wrap{ position:relative; }
-    .theme-toggle{
-      border:none; cursor:pointer; width:42px; height:42px; border-radius:50%;
-      background:var(--card); color:var(--fg);
-      display:grid; place-items:center; font-size:18px;
-      box-shadow:var(--shadow); transition:transform .2s, background .2s;
-    }
-    .theme-toggle:hover{ transform:translateY(-2px); background:var(--card-hover); }
-
-    /* tiny animated popup when going dark */
-    .mode-pop{
-      position:absolute; right:48px; top:50%; transform:translateY(-50%) translateX(8px);
-      background:rgba(6,218,255,0.12); border:1px solid rgba(6,218,255,0.4);
-      color:var(--fg); padding:6px 10px; border-radius:10px; font-size:8px;
-      opacity:0; pointer-events:none; white-space:nowrap;
-    }
-    .mode-pop.show{
-      animation: popfade 3s ease forwards;
-    }
-    @keyframes popfade{
-      0%   {opacity:0; transform:translateY(-50%) translateX(8px)}
-      10%  {opacity:1; transform:translateY(-50%) translateX(0)}
-      80%  {opacity:1; transform:translateY(-50%) translateX(0)}
-      100% {opacity:0; transform:translateY(-50%) translateX(8px)}
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
     }
 
-    /* ===== HERO ===== */
-    .hero{
-      padding: clamp(32px, 6vw, 64px) 0 clamp(24px, 5vw, 48px);
-      display:grid; grid-template-columns:1fr; gap:28px;
-      align-items:center; justify-items:center; text-align:center;
-    }
-    .hero__title{
-      font-family:'Barlow Condensed',sans-serif;
-      font-size: clamp(28px, 6vw, 48px);
-      margin:8px 0;
-    }
-    .hero__sub{ color:var(--muted); font-size: clamp(16px, 2.6vw, 18px); max-width:720px; line-height:1.5; }
-
-    /* ===== TOOL STAGE (carousel) ===== */
-    .stage{
-      position:relative; width:min(560px, 92vw); height:220px; margin:6px auto 8px; overflow:hidden;
-      -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-              mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-    }
-    .belt{
-      position:absolute; inset:0; display:flex; align-items:center; gap:28px;
-      /* Runs forever, smooth */
-      animation: scrollBelt 18s linear infinite;
-    }
-    /* prefer-reduced-motion: slow it down politely */
-    @media (prefers-reduced-motion: reduce){
-      .belt{ animation-duration: 40s; }
-    }
-    @keyframes scrollBelt{
-      from{ transform: translateX(0); }
-      to  { transform: translateX(-50%); } /* we duplicate items for seamless loop */
+    .logo img {
+      height: 60px;
     }
 
-    .tool-ico{
-      flex:0 0 110px; width:110px; height:110px;
-      filter: drop-shadow(0 14px 28px rgba(0,0,0,.55));
-      transition: transform .2s ease;
-    }
-    .tool-ico:hover{ transform: translateY(-2px) scale(1.03); } /* subtle, does NOT pause */
-
-    .tool-ico svg{ width:100%; height:100%; display:block; }
-
-    /* ===== CTA ===== */
-    .cta{ display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:12px; }
-    .btn{
-      display:inline-flex; align-items:center; gap:10px; text-decoration:none;
-      background:var(--accent-blue); color:#00212a; font-weight:700;
-      padding:14px 20px; border-radius:14px;
-      box-shadow:0 10px 24px rgba(6,218,255,.35);
-      transition:transform .2s, box-shadow .2s, background .2s, color .2s;
-    }
-    .btn:hover{ transform:translateY(-2px); box-shadow:0 14px 30px rgba(6,218,255,.45); }
-    .btn svg{ width:20px; height:20px; }
-
-    /* ===== INFO BAND ===== */
-    .band{ margin: clamp(28px, 6vw, 56px) 0 clamp(20px, 5vw, 40px); display:grid; gap:18px; grid-template-columns:1fr; }
-    .notice, .services{
-      background: var(--card); backdrop-filter: blur(6px);
-      border:1px solid rgba(255,255,255,.06);
-      border-radius:18px; padding:18px clamp(16px, 2.6vw, 24px);
-      box-shadow: var(--shadow);
-    }
-    .notice__title{
-      font-family:'Barlow Condensed',sans-serif; font-size: clamp(20px, 4.6vw, 28px);
-      margin:0 0 6px; color: var(--brand-yellow);
-    }
-    .notice__text{ color:var(--fg); opacity:.95; }
-
-    .services__title{
-      font-family:'Barlow Condensed',sans-serif; font-size: clamp(18px, 4.2vw, 24px);
-      margin:0 0 8px; color: var(--accent-blue);
-    }
-    .service-list{ display:grid; gap:10px; grid-template-columns: 1fr; }
-    .service-item{
-      display:flex; align-items:center; gap:12px; padding:12px 12px;
-      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-      border:1px solid rgba(255,255,255,.06); border-radius:12px;
-      transition: transform .2s, background .2s;
-    }
-    .service-item:hover{ transform: translateY(-2px); background: var(--card-hover); }
-    .service-dot{
-      width:8px; height:8px; border-radius:50%;
-      background:var(--accent-blue); box-shadow:0 0 0 4px rgba(6,218,255,.15);
+    .toggle-container {
+      position: relative;
     }
 
-    footer{ padding:24px 0 28px; color:var(--muted); text-align:center; font-size:14px; }
+    .toggle {
+      appearance: none;
+      width: 50px;
+      height: 25px;
+      background: #ccc;
+      border-radius: 25px;
+      position: relative;
+      cursor: pointer;
+      outline: none;
+    }
 
-    @media (min-width: 820px){
-      .hero{ grid-template-columns: .95fr 1.05fr; text-align:left; justify-items:stretch; }
-      .hero__copy{ align-self:center; }
-      .hero__title{ margin-top:0 }
-      .band{ grid-template-columns: 1.1fr .9fr; }
+    .toggle:before {
+      content: '';
+      width: 21px;
+      height: 21px;
+      background: white;
+      border-radius: 50%;
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      transition: 0.3s;
+    }
+
+    .toggle:checked:before {
+      left: 27px;
+      background: #007CFF; /* brand blue */
+    }
+
+    .mode-message {
+      position: absolute;
+      top: -30px;
+      right: 0;
+      background: #007CFF;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 8px;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.5s, transform 0.5s;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    .mode-message.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .hero {
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    .robot {
+      width: 200px;
+      height: 200px;
+      margin: auto;
+    }
+
+    .robot svg {
+      width: 100%;
+      height: 100%;
     }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <!-- Header -->
-    <header>
-      <a class="brand" href="#" aria-label="SKILLHUB Home">
-        <!-- Your blue toolbox icon file, kept as-is (always blue) -->
-        <img src="Untitled (3).png" alt="SKILLHUB toolbox logo" class="logo-img" .toolbox {
-  width: 200px;  
-  height: 120px;
-} />
+  <header>
+    <div class="logo">
+      <img src="toolbox-logo.png" alt="SkillHub Logo">
+    </div>
+    <div class="toggle-container">
+      <input type="checkbox" class="toggle" id="modeToggle">
+      <div class="mode-message" id="modeMessage">Who turned out the lights!</div>
+    </div>
+  </header>
 
-        <span class="wordmark">SKILLHUB</span>
-      </a>
-
-      <div class="toggle-wrap">
-        <button class="theme-toggle" id="themeToggle" title="Toggle theme" aria-label="Toggle theme">🌙</button>
-        <span id="modePop" class="mode-pop" aria-hidden="true">Who turned out the lights!</span>
-      </div>
-    </header>
-
-    <!-- Hero -->
+  <main>
     <section class="hero">
-      <!-- TOOL STAGE: smooth metallic tools, continuous slide -->
-      <img src="Untitled (3).png" alt="SKILLHUB toolbox logo" class="logo-img" .toolbox {
-  width: 200px;  
-  height: 120px;
-      <!-- Copy + CTA (referral positioning) -->
-      <div class="hero__copy">
-        <h1 class="hero__title">We Connect You with Trusted Pros</h1>
-        <p class="hero__sub">
-          SKILLHUB is a <strong>referral service</strong> — we match you with vetted professionals.
-          Electricians are just the beginning. While the full site is in the works, contact us for
-          <strong>A/C Maintenance & Installation</strong> and a full range of
-          <strong>Electrical Services</strong>.
-        </p>
-        <div class="cta">
-          <a class="btn" href="https://wa.me/18762107638" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.5 3.5A11.8 11.8 0 0 0 12 0C5.4 0 0 5.4 0 12c0 2.1.5 4.1 1.5 5.9L0 24l6.3-1.6A12 12 0 0 0 12 24c6.6 0 12-5.4 12-12 0-3.2-1.2-6.2-3.5-8.5Zm-8.5 18a9.9 9.9 0 0 1-5.1-1.4l-.4-.2-3.7 1 .9-3.6-.2-.4A9.9 9.9 0 1 1 12 21.5Zm5.7-7.2c-.3-.1-1.7-.9-2-.9s-.5 0-.7.3-.8.9-1 1.1-.4.2-.7.1a8.1 8.1 0 0 1-2.4-1.5 9.2 9.2 0 0 1-1.7-2.1c-.2-.4 0-.6.1-.8l.5-.6c.2-.3.3-.5.4-.7 0-.2 0-.5-.1-.6-.1-.2-.7-1.6-1-2.2-.3-.6-.5-.5-.7-.5h-.6a1.1 1.1 0 0 0-.8.4c-.3.3-1 1-1 2.4 0 1.4 1 2.7 1.2 2.9.1.2 2 3.2 4.8 4.5.7.3 1.2.6 1.7.7.7.2 1.3.2 1.8.1.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.3 0-.1-.1-.2-.4-.3Z"/></svg>
-            Chat on WhatsApp
-          </a>
-        </div>
+      <h1>Welcome to SkillHub</h1>
+      <p>Connecting you with the best professionals</p>
+      <div class="robot">
+        <!-- Robot SVG with both brand colors -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+          <!-- Head -->
+          <rect x="20" y="14" width="24" height="14" rx="3" fill="#007CFF"/>
+          <circle cx="26" cy="21" r="3" fill="#FFDD2F"/>
+          <circle cx="38" cy="21" r="3" fill="#FFDD2F"/>
+          <!-- Antenna -->
+          <rect x="30" y="6" width="4" height="6" rx="2" fill="#FFDD2F"/>
+          <circle cx="32" cy="4" r="2" fill="#007CFF"/>
+          <!-- Body -->
+          <rect x="18" y="28" width="28" height="22" rx="4" fill="#007CFF"/>
+          <!-- Chest panel -->
+          <rect x="24" y="34" width="16" height="8" rx="2" fill="#FFDD2F"/>
+          <!-- Arms -->
+          <rect x="10" y="30" width="6" height="16" rx="3" fill="#007CFF"/>
+          <rect x="48" y="30" width="6" height="16" rx="3" fill="#007CFF"/>
+          <!-- Legs -->
+          <rect x="24" y="50" width="6" height="10" rx="2" fill="#FFDD2F"/>
+          <rect x="34" y="50" width="6" height="10" rx="2" fill="#FFDD2F"/>
+        </svg>
       </div>
     </section>
-
-    <!-- Blended info band -->
-    <section class="band">
-      <article class="notice">
-        <h3 class="notice__title">⚡ Website Coming Soon</h3>
-        <p class="notice__text">
-          We’re crafting a premium experience. Until launch, this page helps you reach us fast.
-          More trades and services are being added.
-        </p>
-      </article>
-
-      <aside class="services">
-        <h4 class="services__title">Our Services</h4>
-        <div class="service-list">
-          <div class="service-item"><span class="service-dot"></span> A/C Maintenance & Installation</div>
-          <div class="service-item"><span class="service-dot"></span> Wiring (New & Upgrades)</div>
-          <div class="service-item"><span class="service-dot"></span> Electrical Repairs</div>
-          <div class="service-item"><span class="service-dot"></span> Inspections & Troubleshooting</div>
-          <div class="service-item"><span class="service-dot"></span> Other Electrical Services</div>
-          <div class="service-item"><span class="service-dot"></span> More trades coming soon…</div>
-        </div>
-      </aside>
-    </section>
-
-    <footer>© <span id="yr"></span> SKILLHUB. All rights reserved.</footer>
-  </div>
+  </main>
 
   <script>
-    /* Year */
-    document.getElementById('yr').textContent = new Date().getFullYear();
+    const toggle = document.getElementById('modeToggle');
+    const body = document.body;
+    const message = document.getElementById('modeMessage');
 
-    /* Theme: auto-detect + toggle with persistence + fun popup on dark */
-    (function(){
-      const body = document.body;
-      const saved = localStorage.getItem('skillhub-theme');
-      if(saved){ body.classList.toggle('light', saved === 'light'); }
-      else{
-        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-        body.classList.toggle('light', !prefersDark);
+    toggle.addEventListener('change', () => {
+      body.classList.toggle('dark-mode');
+      if (toggle.checked) {
+        message.classList.add('show');
+        setTimeout(() => {
+          message.classList.remove('show');
+        }, 3000);
       }
-
-      const btn = document.getElementById('themeToggle');
-      const pop = document.getElementById('modePop');
-      let popTimer;
-
-      const setIcon = () => btn.textContent = body.classList.contains('light') ? '☀️' : '🌙';
-      setIcon();
-
-      btn.addEventListener('click', ()=>{
-        body.classList.toggle('light');
-        const isLight = body.classList.contains('light');
-        localStorage.setItem('skillhub-theme', isLight ? 'light' : 'dark');
-        setIcon();
-
-        // Only show the little message when going into DARK mode
-        if(!isLight){
-          pop.classList.remove('show'); void pop.offsetWidth; // restart animation
-          pop.classList.add('show');
-          clearTimeout(popTimer);
-          popTimer = setTimeout(()=> pop.classList.remove('show'), 3000);
-        }
-      });
-    })();
+    });
   </script>
-<svg width="0" height="0" style="position:absolute">
-  <defs>
-    <!-- Metallic look via gradient and gloss -->
-    <linearGradient id="steel" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#bbb"/>
-      <stop offset="50%" stop-color="#fff"/>
-      <stop offset="100%" stop-color="#666"/>
-    </linearGradient>
-    <filter id="metalGloss" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur in="SourceAlpha" stdDeviation="1" result="blur"/>
-      <feSpecularLighting in="blur" surfaceScale="5" specularConstant=".5" specularExponent="20" lighting-color="#ffffff" result="spec">
-        <fePointLight x="-50" y="-50" z="200"/>
-      </feSpecularLighting>
-      <feComposite in="spec" in2="SourceAlpha" operator="in"/>
-      <feComposite in="SourceGraphic"/>
-    </filter>
-
-    <!-- Tool symbols -->
-    <symbol id="tool-hammer" viewBox="0 0 64 64">
-      <g filter="url(#metalGloss)">
-        <!-- Hammer shape -->
-        <path fill="url(#steel)" d="M10 54l20-20 8 8-20 20z"/>
-        <rect x="28" y="14" width="8" height="24" rx="2" fill="url(#steel)"/>
-      </g>
-    </symbol>
-
-    <symbol id="tool-wrench" viewBox="0 0 64 64">
-      <g filter="url(#metalGloss)">
-        <path fill="url(#steel)" d="M50 10l4 4-20 20-4-4 20-20z"/>
-        <circle cx="18" cy="36" r="10" fill="url(#steel)"/>
-      </g>
-    </symbol>
-
-    <symbol id="tool-screwdriver" viewBox="0 0 64 64">
-      <g filter="url(#metalGloss)">
-        <rect x="28" y="10" width="8" height="28" fill="url(#steel)"/>
-        <path fill="url(#steel)" d="M32 6l4 4-4 4-4-4z"/>
-        <rect x="20" y="38" width="24" height="8" rx="4" fill="url(#steel)"/>
-      </g>
-    </symbol>
-
-    <symbol id="tool-pliers" viewBox="0 0 64 64">
-      <g filter="url(#metalGloss)">
-        <circle cx="32" cy="32" r="4" fill="#ccc"/>
-        <path fill="url(#steel)" d="M12 54l20-20 8 8-20 20z"/>
-        <path fill="url(#steel)" d="M52 54l-20-20-8 8 20 20z"/>
-      </g>
-    </symbol>
-
-    <symbol id="tool-drill" viewBox="0 0 64 64">
-      <g filter="url(#metalGloss)">
-        <rect x="12" y="22" width="30" height="12" rx="6" fill="url(#steel)"/>
-        <rect x="25" y="34" width="10" height="20" rx="3" fill="url(#steel)"/>
-      </g>
-    </symbol>
-
-    <symbol id="tool-saw" viewBox="0 0 64 64">
-      <g filter="url(#metalGloss)">
-        <path fill="url(#steel)" d="M8 44l20-20 24 24-4 4z"/>
-        <path d="M12 48l4 4 4-4 4 4 4-4" stroke="#ddd" stroke-width="2"/>
-      </g>
-    </symbol>
-
-    <symbol id="tool-tape" viewBox="0 0 64 64">
-      <g filter="url(#metalGloss)">
-        <rect x="12" y="28" width="24" height="14" rx="7" fill="url(#steel)"/>
-        <circle cx="24" cy="35" r="4" fill="#f2f2f2"/>
-      </g>
-    </symbol>
-
-    <symbol id="tool-hardhat" viewBox="0 0 64 64">
-      <g filter="url(#metalGloss)">
-        <path fill="url(#steel)" d="M12 32c0-12 8-20 20-20s20 8 20 20"/>
-        <rect x="12" y="32" width="40" height="12" rx="6" fill="url(#steel)"/>
-      </g>
-    </symbol>
-  </defs>
-</svg>
 </body>
-                </html>
+</html>
