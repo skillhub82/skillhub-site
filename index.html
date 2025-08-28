@@ -1,157 +1,189 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>SkillHub</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SkillHub – Connecting You to the Right Electrician</title>
   <style>
-    body {
+    /* Base reset */
+    * {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: white;
-      color: black;
-      transition: background-color 0.3s, color 0.3s;
+      padding: 0;
+      box-sizing: border-box;
     }
 
-    body.dark-mode {
-      background-color: #1c1c1c;
-      color: white;
+    body {
+      font-family: Arial, sans-serif;
+      background: #ffffff;
+      color: #333;
+      line-height: 1.6;
     }
 
     header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px;
-    }
-
-    .logo img {
-      height: 60px;
-    }
-
-    .toggle-container {
-      position: relative;
-    }
-
-    .toggle {
-      appearance: none;
-      width: 50px;
-      height: 25px;
-      background: #ccc;
-      border-radius: 25px;
-      position: relative;
-      cursor: pointer;
-      outline: none;
-    }
-
-    .toggle:before {
-      content: '';
-      width: 21px;
-      height: 21px;
-      background: white;
-      border-radius: 50%;
-      position: absolute;
-      top: 2px;
-      left: 2px;
-      transition: 0.3s;
-    }
-
-    .toggle:checked:before {
-      left: 27px;
-      background: #007CFF; /* brand blue */
-    }
-
-    .mode-message {
-      position: absolute;
-      top: -30px;
-      right: 0;
-      background: #007CFF;
-      color: white;
-      padding: 5px 10px;
-      border-radius: 8px;
-      opacity: 0;
-      transform: translateY(10px);
-      transition: opacity 0.5s, transform 0.5s;
-      font-size: 14px;
-      white-space: nowrap;
-    }
-
-    .mode-message.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .hero {
       text-align: center;
-      margin-top: 50px;
+      padding: 40px 20px 20px;
+    }
+
+    .logo {
+      width: 200px;
+      max-width: 40vw;
+      margin-bottom: 10px;
+    }
+
+    header h1 {
+      font-size: 2rem;
+      color: #007CFF;
+    }
+
+    header p {
+      font-size: 1rem;
+      color: #555;
+    }
+
+    main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .robot-container {
+      position: relative;
+      display: inline-block;
+      margin: 30px 0;
     }
 
     .robot {
-      width: 200px;
-      height: 200px;
-      margin: auto;
+      width: 240px;
+      max-width: 50vw;
+      cursor: pointer;
     }
 
-    .robot svg {
-      width: 100%;
-      height: 100%;
+    .speech-bubble {
+      position: absolute;
+      top: -70px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #007CFF;
+      color: #fff;
+      padding: 12px 18px;
+      border-radius: 12px;
+      font-size: 14px;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease-in-out;
+    }
+
+    .speech-bubble::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 10px 10px 0 10px;
+      border-style: solid;
+      border-color: #007CFF transparent transparent transparent;
+    }
+
+    .speech-bubble.show {
+      opacity: 1;
+    }
+
+    .cta-button {
+      background: #FFDD2F;
+      color: #333;
+      border: none;
+      padding: 14px 28px;
+      font-size: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .cta-button:hover {
+      background: #f5c500;
+      transform: scale(1.05);
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9rem;
+      color: #777;
+    }
+
+    /* Dark mode */
+    @media (prefers-color-scheme: dark) {
+      body {
+        background: #1c1c1c;
+        color: #f1f1f1;
+      }
+      header h1 {
+        color: #FFDD2F;
+      }
+      header p {
+        color: #ddd;
+      }
+      .speech-bubble {
+        background: #FFDD2F;
+        color: #333;
+      }
+      .speech-bubble::after {
+        border-color: #FFDD2F transparent transparent transparent;
+      }
     }
   </style>
 </head>
 <body>
+
+  <!-- Header -->
   <header>
-    <div class="logo">
-      <img src="toolbox-logo.png" alt="SkillHub Logo">
-    </div>
-    <div class="toggle-container">
-      <input type="checkbox" class="toggle" id="modeToggle">
-      <div class="mode-message" id="modeMessage">Who turned out the lights!</div>
-    </div>
+    <img src="your-logo.png" alt="SkillHub Logo" class="logo">
+    <h1>Welcome to SkillHub</h1>
+    <p>Connecting you with reliable electricians, fast and easy.</p>
   </header>
 
+  <!-- Main Section -->
   <main>
-    <section class="hero">
-      <h1>Welcome to SkillHub</h1>
-      <p>Connecting you with the best professionals</p>
-      <div class="robot">
-        <!-- Robot SVG with both brand colors -->
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-          <!-- Head -->
-          <rect x="20" y="14" width="24" height="14" rx="3" fill="#007CFF"/>
-          <circle cx="26" cy="21" r="3" fill="#FFDD2F"/>
-          <circle cx="38" cy="21" r="3" fill="#FFDD2F"/>
-          <!-- Antenna -->
-          <rect x="30" y="6" width="4" height="6" rx="2" fill="#FFDD2F"/>
-          <circle cx="32" cy="4" r="2" fill="#007CFF"/>
-          <!-- Body -->
-          <rect x="18" y="28" width="28" height="22" rx="4" fill="#007CFF"/>
-          <!-- Chest panel -->
-          <rect x="24" y="34" width="16" height="8" rx="2" fill="#FFDD2F"/>
-          <!-- Arms -->
-          <rect x="10" y="30" width="6" height="16" rx="3" fill="#007CFF"/>
-          <rect x="48" y="30" width="6" height="16" rx="3" fill="#007CFF"/>
-          <!-- Legs -->
-          <rect x="24" y="50" width="6" height="10" rx="2" fill="#FFDD2F"/>
-          <rect x="34" y="50" width="6" height="10" rx="2" fill="#FFDD2F"/>
-        </svg>
-      </div>
-    </section>
+    <div class="robot-container">
+      <img src="robot.png" alt="Friendly Robot" class="robot" id="robot">
+      <div class="speech-bubble" id="bubble"></div>
+    </div>
+
+    <button class="cta-button">Get Started</button>
   </main>
 
-  <script>
-    const toggle = document.getElementById('modeToggle');
-    const body = document.body;
-    const message = document.getElementById('modeMessage');
+  <!-- Footer -->
+  <footer>
+    &copy; 2025 SkillHub. All rights reserved.
+  </footer>
 
-    toggle.addEventListener('change', () => {
-      body.classList.toggle('dark-mode');
-      if (toggle.checked) {
-        message.classList.add('show');
-        setTimeout(() => {
-          message.classList.remove('show');
-        }, 3000);
-      }
-    });
+  <script>
+    const robot = document.getElementById("robot");
+    const bubble = document.getElementById("bubble");
+
+    const messages = [
+      "Hehe, that tickles!",
+      "Careful, I'm sensitive there!",
+      "Easy now, I’m built for work, not giggles!",
+      "Haha, okay okay, you got me!"
+    ];
+
+    function showMessage() {
+      const msg = messages[Math.floor(Math.random() * messages.length)];
+      bubble.textContent = msg;
+      bubble.classList.add("show");
+
+      setTimeout(() => {
+        bubble.classList.remove("show");
+      }, 3000);
+    }
+
+    robot.addEventListener("mouseenter", showMessage);
+    robot.addEventListener("click", showMessage); // Mobile tap support
   </script>
+
 </body>
 </html>
