@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SkillHub – Connecting You to the Right Electrician</title>
+  <title>SkillHub</title>
   <style>
-    /* Base reset */
     * {
       margin: 0;
       padding: 0;
@@ -16,174 +15,181 @@
       font-family: Arial, sans-serif;
       background: #ffffff;
       color: #333;
-      line-height: 1.6;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+      transition: background 0.3s, color 0.3s;
     }
 
-    header {
-      text-align: center;
-      padding: 40px 20px 20px;
+    body.dark {
+      background: #121212;
+      color: #f1f1f1;
     }
 
     .logo {
-      width: 200px;
-      max-width: 40vw;
-      margin-bottom: 10px;
-    }
-
-    header h1 {
-      font-size: 2rem;
-      color: #007CFF;
-    }
-
-    header p {
-      font-size: 1rem;
-      color: #555;
-    }
-
-    main {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 40px 20px;
-      text-align: center;
-    }
-
-    .robot-container {
-      position: relative;
-      display: inline-block;
-      margin: 30px 0;
+      max-width: 220px;
+      width: 40%;
+      min-width: 120px;
+      height: auto;
+      margin-bottom: 20px;
     }
 
     .robot {
-      width: 240px;
-      max-width: 50vw;
+      max-width: 300px;
+      width: 60%;
+      min-width: 180px;
+      height: auto;
+      margin: 20px 0;
       cursor: pointer;
+      transition: transform 0.2s ease;
+      position: relative;
     }
 
-    .speech-bubble {
+    /* Wiggle */
+    .tickle {
+      animation: wiggle 0.4s ease;
+    }
+
+    @keyframes wiggle {
+      0% { transform: rotate(0deg); }
+      25% { transform: rotate(8deg); }
+      50% { transform: rotate(-8deg); }
+      75% { transform: rotate(6deg); }
+      100% { transform: rotate(0deg); }
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      color: #007CFF;
+    }
+
+    p {
+      font-size: 1.2rem;
+      margin-top: 10px;
+      margin-bottom: 30px;
+    }
+
+    .toggle {
       position: absolute;
-      top: -70px;
+      top: 20px;
+      right: 20px;
+      cursor: pointer;
+      background: #ffdd2f;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 20px;
+      font-weight: bold;
+      color: #121212;
+      transition: background 0.3s;
+    }
+
+    .toggle:hover {
+      background: #007CFF;
+      color: #fff;
+    }
+
+    .dark-message {
+      position: absolute;
+      top: 60px;
+      right: 20px;
+      background: #007CFF;
+      color: #fff;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: opacity 0.3s, transform 0.3s;
+    }
+
+    .dark-message.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Speech bubble */
+    .speech {
+      position: absolute;
+      top: -50px;
       left: 50%;
       transform: translateX(-50%);
       background: #007CFF;
       color: #fff;
-      padding: 12px 18px;
-      border-radius: 12px;
-      font-size: 14px;
-      white-space: nowrap;
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-size: 0.9rem;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.4s ease-in-out;
+      white-space: nowrap;
+      transition: opacity 0.3s, transform 0.3s;
     }
 
-    .speech-bubble::after {
-      content: '';
+    .speech::after {
+      content: "";
       position: absolute;
-      bottom: -10px;
+      bottom: -8px;
       left: 50%;
       transform: translateX(-50%);
-      border-width: 10px 10px 0 10px;
+      border-width: 8px;
       border-style: solid;
       border-color: #007CFF transparent transparent transparent;
     }
 
-    .speech-bubble.show {
+    .speech.show {
       opacity: 1;
-    }
-
-    .cta-button {
-      background: #FFDD2F;
-      color: #333;
-      border: none;
-      padding: 14px 28px;
-      font-size: 1rem;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: transform 0.2s ease, background 0.2s ease;
-    }
-
-    .cta-button:hover {
-      background: #f5c500;
-      transform: scale(1.05);
-    }
-
-    footer {
-      text-align: center;
-      padding: 20px;
-      font-size: 0.9rem;
-      color: #777;
-    }
-
-    /* Dark mode */
-    @media (prefers-color-scheme: dark) {
-      body {
-        background: #1c1c1c;
-        color: #f1f1f1;
-      }
-      header h1 {
-        color: #FFDD2F;
-      }
-      header p {
-        color: #ddd;
-      }
-      .speech-bubble {
-        background: #FFDD2F;
-        color: #333;
-      }
-      .speech-bubble::after {
-        border-color: #FFDD2F transparent transparent transparent;
-      }
+      transform: translateX(-50%) translateY(-5px);
     }
   </style>
 </head>
 <body>
+  <!-- Logo -->
+  <img src="your-logo.png" alt="SkillHub Logo" class="logo">
 
-  <!-- Header -->
-  <header>
-    <img src="your-logo.png" alt="SkillHub Logo" class="logo">
-    <h1>Welcome to SkillHub</h1>
-    <p>Connecting you with reliable electricians, fast and easy.</p>
-  </header>
+  <!-- Text -->
+  <h1>Welcome to SkillHub</h1>
+  <p>Connecting you with trusted electricians and skilled professionals.</p>
 
-  <!-- Main Section -->
-  <main>
-    <div class="robot-container">
-      <img src="robot.png" alt="Friendly Robot" class="robot" id="robot">
-      <div class="speech-bubble" id="bubble"></div>
-    </div>
+  <!-- Robot with speech bubble -->
+  <div style="position: relative; display: inline-block;">
+    <img src="your-robot.png" alt="Friendly Robot" class="robot" id="robot">
+    <div class="speech" id="speech">Hehe! That tickles 😆</div>
+  </div>
 
-    <button class="cta-button">Get Started</button>
-  </main>
-
-  <!-- Footer -->
-  <footer>
-    &copy; 2025 SkillHub. All rights reserved.
-  </footer>
+  <!-- Toggle -->
+  <button class="toggle" id="modeToggle">Toggle Mode</button>
+  <div class="dark-message" id="darkMessage">Who turned out the lights!</div>
 
   <script>
-    const robot = document.getElementById("robot");
-    const bubble = document.getElementById("bubble");
+    const toggle = document.getElementById('modeToggle');
+    const body = document.body;
+    const darkMessage = document.getElementById('darkMessage');
+    const robot = document.getElementById('robot');
+    const speech = document.getElementById('speech');
 
-    const messages = [
-      "Hehe, that tickles!",
-      "Careful, I'm sensitive there!",
-      "Easy now, I’m built for work, not giggles!",
-      "Haha, okay okay, you got me!"
-    ];
+    toggle.addEventListener('click', () => {
+      body.classList.toggle('dark');
+      if (body.classList.contains('dark')) {
+        darkMessage.classList.add('show');
+        setTimeout(() => {
+          darkMessage.classList.remove('show');
+        }, 3000);
+      }
+    });
 
-    function showMessage() {
-      const msg = messages[Math.floor(Math.random() * messages.length)];
-      bubble.textContent = msg;
-      bubble.classList.add("show");
-
+    function tickleRobot() {
+      robot.classList.add('tickle');
+      speech.classList.add('show');
       setTimeout(() => {
-        bubble.classList.remove("show");
-      }, 3000);
+        robot.classList.remove('tickle');
+        speech.classList.remove('show');
+      }, 1200);
     }
 
-    robot.addEventListener("mouseenter", showMessage);
-    robot.addEventListener("click", showMessage); // Mobile tap support
+    robot.addEventListener('mouseenter', tickleRobot);
+    robot.addEventListener('click', tickleRobot);
   </script>
-
 </body>
 </html>
