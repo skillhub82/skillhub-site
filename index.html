@@ -1,195 +1,324 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SkillHub</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SKILLHUB — Website Coming Soon</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600&family=Barlow:wght@400;500&display=swap" rel="stylesheet">
+
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    :root{
+      --brand-yellow:#ffdd2f;
+      --accent-blue:#007CFF;
+      --fg:#eaeaea;
+      --muted:#b8b8b8;
+      --bg:#000000;
+      --bg2:#0a0a0a;
+      --energy1:#071a33;
+      --energy2:rgba(255,221,47,0.08);
+      --card:rgba(255,255,255,0.05);
+      --card-hover:rgba(255,255,255,0.08);
+      --shadow:0 12px 30px rgba(0,0,0,0.45);
+      --toast-bg:#007CFF;
+      --toast-fg:#fff;
+    }
+    body.light{
+      --fg:#111;
+      --muted:#444;
+      --bg:#f7f8fb;
+      --bg2:#ffffff;
+      --energy1:#eaf3ff;
+      --energy2:rgba(255,221,47,0.14);
+      --card:#ffffff;
+      --card-hover:#fffef3;
+      --shadow:0 12px 24px rgba(0,0,0,0.12);
     }
 
-    body {
-      font-family: Arial, sans-serif;
-      background: #ffffff;
-      color: #333;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      text-align: center;
-      transition: background 0.3s, color 0.3s;
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:'Barlow',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      color:var(--fg);
+      background:
+        radial-gradient(1200px 700px at 15% -10%, var(--energy2), transparent 60%),
+        radial-gradient(900px 500px at 90% 110%, rgba(0,124,255,0.12), transparent 60%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg2) 50%, var(--bg) 100%);
+      transition: background 400ms ease, color 200ms ease;
+      overflow-x:hidden;
+    }
+    a{color:inherit}
+
+    .wrap{
+      max-width:1100px;
+      margin:0 auto;
+      padding:24px clamp(16px, 3vw, 32px);
     }
 
-    body.dark {
-      background: #121212;
-      color: #f1f1f1;
-    }
-
-    .logo {
-      max-width: 220px;
-      width: 40%;
-      min-width: 120px;
-      height: auto;
-      margin-bottom: 20px;
-    }
-
-    .robot {
-      max-width: 300px;
-      width: 60%;
-      min-width: 180px;
-      height: auto;
-      margin: 20px 0;
-      cursor: pointer;
-      transition: transform 0.2s ease;
+    header{
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
       position: relative;
     }
-
-    /* Wiggle */
-    .tickle {
-      animation: wiggle 0.4s ease;
+    .brand{
+      display:flex; align-items:center; gap:14px; text-decoration:none;
+    }
+    .logo-img{
+      width:44px; height:44px; border-radius:10px; object-fit:cover;
+      box-shadow:var(--shadow);
+    }
+    .wordmark{
+      font-family:'Barlow Condensed',sans-serif; font-weight:600;
+      font-size:clamp(28px, 5vw, 40px); letter-spacing:.2px; color:var(--brand-yellow);
+      line-height:1;
     }
 
-    @keyframes wiggle {
-      0% { transform: rotate(0deg); }
-      25% { transform: rotate(8deg); }
-      50% { transform: rotate(-8deg); }
-      75% { transform: rotate(6deg); }
-      100% { transform: rotate(0deg); }
+    .toggle-wrap{ position: relative; }
+    .theme-toggle{
+      border:none; cursor:pointer;
+      width:42px; height:42px; border-radius:50%;
+      background:var(--card); color:var(--fg);
+      display:grid; place-items:center; font-size:18px;
+      box-shadow:var(--shadow); transition:transform .2s, background .2s;
+    }
+    .theme-toggle:hover{ transform:translateY(-2px); background:var(--card-hover); }
+
+    .toggle-toast{
+      position:absolute; top:50%; right:52px; transform:translateY(-50%) translateX(8px);
+      background:var(--toast-bg); color:var(--toast-fg);
+      padding:6px 10px; border-radius:10px; font-size:12px; white-space:nowrap;
+      box-shadow:var(--shadow);
+      opacity:0; pointer-events:none;
+      transition:opacity .35s ease, transform .35s ease;
+    }
+    .toggle-toast.show{
+      opacity:1; transform:translateY(-50%) translateX(0);
     }
 
-    h1 {
-      font-size: 2.5rem;
-      color: #007CFF;
+    .hero{
+      padding: clamp(32px, 6vw, 64px) 0 clamp(24px, 5vw, 48px);
+      display:grid; grid-template-columns:1fr; gap:28px;
+      align-items:center; justify-items:center; text-align:center;
+    }
+    .hero__title{
+      font-family:'Barlow Condensed',sans-serif;
+      font-size: clamp(28px, 6vw, 48px);
+      margin:8px 0;
+    }
+    .hero__sub{
+      color:var(--muted); font-size: clamp(16px, 2.6vw, 18px);
+      max-width:720px; line-height:1.5;
     }
 
-    p {
-      font-size: 1.2rem;
-      margin-top: 10px;
-      margin-bottom: 30px;
+    /* Stage becomes robot stage (same size/spot) */
+    .stage{
+      position:relative; width:min(560px, 92vw); height:260px; margin:6px auto 8px; overflow:visible;
+      display:flex; align-items:center; justify-content:center;
+    }
+    .robot-svg{ width:100%; height:100%; }
+
+    /* Gentle float for the robot (keeps a little life without being noisy) */
+    .float {
+      animation: float 5s ease-in-out infinite;
+      transform-origin:center;
+    }
+    @keyframes float{
+      0% { transform: translateY(0) }
+      50%{ transform: translateY(-6px) }
+      100%{ transform: translateY(0) }
     }
 
-    .toggle {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      cursor: pointer;
-      background: #ffdd2f;
-      border: none;
-      padding: 10px 15px;
-      border-radius: 20px;
-      font-weight: bold;
-      color: #121212;
-      transition: background 0.3s;
+    .cta{ display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:12px; }
+    .btn{
+      display:inline-flex; align-items:center; gap:10px; text-decoration:none;
+      background:var(--accent-blue); color:#fff; font-weight:700;
+      padding:14px 20px; border-radius:14px;
+      box-shadow:0 10px 24px rgba(0,124,255,.35);
+      transition:transform .2s, box-shadow .2s, background .2s;
     }
+    .btn:hover{ transform:translateY(-2px); box-shadow:0 14px 30px rgba(0,124,255,.45); background:#0a6fe6; }
+    .btn svg{ width:20px; height:20px; }
 
-    .toggle:hover {
-      background: #007CFF;
-      color: #fff;
+    .band{
+      margin: clamp(28px, 6vw, 56px) 0 clamp(20px, 5vw, 40px);
+      display:grid; gap:18px; grid-template-columns:1fr;
     }
-
-    .dark-message {
-      position: absolute;
-      top: 60px;
-      right: 20px;
-      background: #007CFF;
-      color: #fff;
-      padding: 6px 12px;
-      border-radius: 8px;
-      font-size: 0.9rem;
-      opacity: 0;
-      transform: translateY(-10px);
-      transition: opacity 0.3s, transform 0.3s;
+    .notice, .services{
+      background: var(--card); backdrop-filter: blur(6px);
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:18px; padding:18px clamp(16px, 2.6vw, 24px);
+      box-shadow: var(--shadow);
     }
-
-    .dark-message.show {
-      opacity: 1;
-      transform: translateY(0);
+    .notice__title{
+      font-family:'Barlow Condensed',sans-serif; font-size: clamp(20px, 4.6vw, 28px);
+      margin:0 0 6px; color: var(--brand-yellow);
     }
+    .notice__text{ color:var(--fg); opacity:.95; }
 
-    /* Speech bubble */
-    .speech {
-      position: absolute;
-      top: -50px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #007CFF;
-      color: #fff;
-      padding: 8px 14px;
-      border-radius: 20px;
-      font-size: 0.9rem;
-      opacity: 0;
-      pointer-events: none;
-      white-space: nowrap;
-      transition: opacity 0.3s, transform 0.3s;
+    .services__title{
+      font-family:'Barlow Condensed',sans-serif; font-size: clamp(18px, 4.2vw, 24px);
+      margin:0 0 8px; color: var(--accent-blue);
     }
-
-    .speech::after {
-      content: "";
-      position: absolute;
-      bottom: -8px;
-      left: 50%;
-      transform: translateX(-50%);
-      border-width: 8px;
-      border-style: solid;
-      border-color: #007CFF transparent transparent transparent;
+    .service-list{ display:grid; gap:10px; grid-template-columns: 1fr; }
+    .service-item{
+      display:flex; align-items:center; gap:12px; padding:12px 12px;
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border:1px solid rgba(255,255,255,.06); border-radius:12px;
+      transition: transform .2s, background .2s;
     }
+    .service-item:hover{ transform: translateY(-2px); background: var(--card-hover); }
+    .service-dot{ width:8px; height:8px; border-radius:50%; background:var(--accent-blue); box-shadow:0 0 0 4px rgba(0,124,255,.15); }
 
-    .speech.show {
-      opacity: 1;
-      transform: translateX(-50%) translateY(-5px);
+    footer{ padding:24px 0 28px; color:var(--muted); text-align:center; font-size:14px; }
+
+    @media (min-width: 820px){
+      .hero{ grid-template-columns: .95fr 1.05fr; text-align:left; justify-items:stretch; }
+      .hero__copy{ align-self:center; }
+      .hero__title{ margin-top:0 }
+      .band{ grid-template-columns: 1.1fr .9fr; }
     }
   </style>
 </head>
 <body>
-  <!-- Logo -->
-  <img src="your-logo.png" alt="SkillHub Logo" class="logo">
+  <div class="wrap">
+    <!-- Header -->
+    <header>
+      <a class="brand" href="#" aria-label="SKILLHUB Home">
+        <!-- Use your blue toolbox image; keep filename exactly as below and place 2.png next to index.html -->
+        <img src="2.png" alt="SKILLHUB logo" class="logo-img" />
+        <span class="wordmark">SKILLHUB</span>
+      </a>
 
-  <!-- Text -->
-  <h1>Welcome to SkillHub</h1>
-  <p>Connecting you with trusted electricians and skilled professionals.</p>
+      <div class="toggle-wrap">
+        <button class="theme-toggle" id="themeToggle" title="Toggle theme" aria-label="Toggle theme">🌙</button>
+        <span id="toggleToast" class="toggle-toast">Who turned out the lights!</span>
+      </div>
+    </header>
 
-  <!-- Robot with speech bubble -->
-  <div style="position: relative; display: inline-block;">
-    <img src="your-robot.png" alt="Friendly Robot" class="robot" id="robot">
-    <div class="speech" id="speech">Hehe! That tickles 😆</div>
+    <!-- Hero -->
+    <section class="hero">
+      <!-- Robot (replacing the old tools carousel) -->
+      <div class="stage" aria-hidden="true">
+        <svg class="robot-svg" viewBox="0 0 560 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Friendly service robot">
+          <defs>
+            <linearGradient id="botBlue" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#007CFF"/>
+              <stop offset="100%" stop-color="#2a8dff"/>
+            </linearGradient>
+            <linearGradient id="botYellow" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#FFDD2F"/>
+              <stop offset="100%" stop-color="#ffd100"/>
+            </linearGradient>
+          </defs>
+
+          <!-- subtle ground shadow -->
+          <ellipse cx="280" cy="210" rx="120" ry="16" fill="black" opacity=".22"/>
+
+          <g class="float">
+            <!-- body -->
+            <rect x="210" y="100" width="140" height="90" rx="18" fill="url(#botBlue)"/>
+            <!-- body highlight -->
+            <rect x="210" y="100" width="140" height="45" rx="18" fill="#ffffff" opacity=".07"/>
+
+            <!-- head -->
+            <rect x="230" y="50" width="100" height="64" rx="16" fill="url(#botBlue)"/>
+            <rect x="230" y="50" width="100" height="32" rx="16" fill="#ffffff" opacity=".06"/>
+
+            <!-- eyes -->
+            <circle cx="258" cy="82" r="8" fill="url(#botYellow)"/>
+            <circle cx="302" cy="82" r="8" fill="url(#botYellow)"/>
+            <!-- smile -->
+            <path d="M254 98 C268 112, 292 112, 306 98" fill="none" stroke="url(#botYellow)" stroke-width="6" stroke-linecap="round"/>
+
+            <!-- antenna -->
+            <rect x="277" y="34" width="6" height="18" rx="3" fill="url(#botBlue)"/>
+            <circle cx="280" cy="28" r="7" fill="url(#botYellow)"/>
+
+            <!-- arms -->
+            <rect x="188" y="112" width="24" height="14" rx="7" fill="url(#botBlue)"/>
+            <rect x="358" y="112" width="24" height="14" rx="7" fill="url(#botBlue)"/>
+
+            <!-- chest badge -->
+            <rect x="268" y="126" width="24" height="24" rx="6" fill="url(#botYellow)"/>
+          </g>
+        </svg>
+      </div>
+
+      <!-- Copy + CTA (unchanged) -->
+      <div class="hero__copy">
+        <h1 class="hero__title">We Connect You with Trusted Pros</h1>
+        <p class="hero__sub">
+          SKILLHUB is a <strong>referral service</strong> — we match you with vetted professionals.
+          Electricians are just the beginning. While the full site is in the works, contact us for
+          <strong>A/C Maintenance & Installation</strong> and a full range of
+          <strong>Electrical Services</strong>.
+        </p>
+        <div class="cta">
+          <a class="btn" href="https://wa.me/18762107638" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.5 3.5A11.8 11.8 0 0 0 12 0C5.4 0 0 5.4 0 12c0 2.1.5 4.1 1.5 5.9L0 24l6.3-1.6A12 12 0 0 0 12 24c6.6 0 12-5.4 12-12 0-3.2-1.2-6.2-3.5-8.5Zm-8.5 18a9.9 9.9 0 0 1-5.1-1.4l-.4-.2-3.7 1 .9-3.6-.2-.4A9.9 9.9 0 1 1 12 21.5Zm5.7-7.2c-.3-.1-1.7-.9-2-.9s-.5 0-.7.3-.8.9-1 1.1-.4.2-.7.1a8.1 8.1 0 0 1-2.4-1.5 9.2 9.2 0 0 1-1.7-2.1c-.2-.4 0-.6.1-.8l.5-.6c.2-.3.3-.5.4-.7 0-.2 0-.5-.1-.6-.1-.2-.7-1.6-1-2.2-.3-.6-.5-.5-.7-.5h-.6a1.1 1.1 0 0 0-.8.4c-.3.3-1 1-1 2.4 0 1.4 1 2.7 1.2 2.9.1.2 2 3.2 4.8 4.5.7.3 1.2.6 1.7.7.7.2 1.3.2 1.8.1.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.3 0-.1-.1-.2-.4-.3Z"/></svg>
+            Chat on WhatsApp
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Blended info band -->
+    <section class="band">
+      <article class="notice">
+        <h3 class="notice__title">⚡ Website Coming Soon</h3>
+        <p class="notice__text">
+          We’re crafting a premium experience. Until launch, this page helps you reach us fast.
+          More trades and services are being added.
+        </p>
+      </article>
+
+      <aside class="services">
+        <h4 class="services__title">Our Services</h4>
+        <div class="service-list">
+          <div class="service-item"><span class="service-dot"></span> A/C Maintenance & Installation</div>
+          <div class="service-item"><span class="service-dot"></span> Wiring (New & Upgrades)</div>
+          <div class="service-item"><span class="service-dot"></span> Electrical Repairs</div>
+          <div class="service-item"><span class="service-dot"></span> Inspections & Troubleshooting</div>
+          <div class="service-item"><span class="service-dot"></span> Other Electrical Services</div>
+          <div class="service-item"><span class="service-dot"></span> More trades coming soon…</div>
+        </div>
+      </aside>
+    </section>
+
+    <footer>© <span id="yr"></span> SKILLHUB. All rights reserved.</footer>
   </div>
 
-  <!-- Toggle -->
-  <button class="toggle" id="modeToggle">Toggle Mode</button>
-  <div class="dark-message" id="darkMessage">Who turned out the lights!</div>
-
   <script>
-    const toggle = document.getElementById('modeToggle');
-    const body = document.body;
-    const darkMessage = document.getElementById('darkMessage');
-    const robot = document.getElementById('robot');
-    const speech = document.getElementById('speech');
+    /* Year */
+    document.getElementById('yr').textContent = new Date().getFullYear();
 
-    toggle.addEventListener('click', () => {
-      body.classList.toggle('dark');
-      if (body.classList.contains('dark')) {
-        darkMessage.classList.add('show');
-        setTimeout(() => {
-          darkMessage.classList.remove('show');
-        }, 3000);
+    /* Theme: auto-detect + toggle with persistence + fun toast */
+    (function(){
+      const saved = localStorage.getItem('skillhub-theme');
+      if(saved){
+        document.body.classList.toggle('light', saved === 'light');
+      }else{
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.body.classList.toggle('light', !prefersDark);
       }
-    });
 
-    function tickleRobot() {
-      robot.classList.add('tickle');
-      speech.classList.add('show');
-      setTimeout(() => {
-        robot.classList.remove('tickle');
-        speech.classList.remove('show');
-      }, 1200);
-    }
+      const btn = document.getElementById('themeToggle');
+      const toast = document.getElementById('toggleToast');
+      const setIcon = () => btn.textContent = document.body.classList.contains('light') ? '☀️' : '🌙';
+      setIcon();
 
-    robot.addEventListener('mouseenter', tickleRobot);
-    robot.addEventListener('click', tickleRobot);
+      btn.addEventListener('click', ()=>{
+        const goingDark = document.body.classList.contains('light');
+        document.body.classList.toggle('light');
+        localStorage.setItem('skillhub-theme', document.body.classList.contains('light') ? 'light' : 'dark');
+        setIcon();
+
+        if(goingDark){
+          toast.classList.add('show');
+          setTimeout(()=>toast.classList.remove('show'), 3000);
+        }
+      });
+    })();
   </script>
 </body>
-</html>
+                          </html>
